@@ -799,9 +799,20 @@ email: 'ritujhansi01@gmail.com',
 pin: '7860',
 phone: ''
 };
-​function isValidImageUrl(url) {
+​// Blocks any old white placeholder images (1200x250 / placehold.co / via.placeholder)
+function isValidImageUrl(url) {
 if (!url || typeof url !== 'string') return false;
-if (url.includes('placehold.co') || url.includes('1200x250') || url.includes('placeholder')) return false;
+const lower = url.toLowerCase();
+if (
+lower.includes('placehold') ||
+lower.includes('1200x250') ||
+lower.includes('1200') ||
+lower.includes('dummy') ||
+lower.includes('default_banner') ||
+lower.includes('text=dj')
+) {
+return false;
+}
 return url.startsWith('http') || url.startsWith('data:image');
 }
 ​function initDefaults() {
@@ -809,12 +820,16 @@ const logoEl = document.getElementById('siteLogo');
 const bannerEl = document.getElementById('siteBanner');
 logoEl.src = DEFAULT_LOGO;
 bannerEl.src = DEFAULT_BANNER;
-​// Fallback protection if a broken link ever loads
-logoEl.onerror = () => { logoEl.src = DEFAULT_LOGO; };
+​logoEl.onerror = () => { logoEl.src = DEFAULT_LOGO; };
 bannerEl.onerror = () => { bannerEl.src = DEFAULT_BANNER; };
 ​const savedSettings = localStorage.getItem('djSettings');
 if (savedSettings) {
-try { applySettingsObject(JSON.parse(savedSettings)); } catch(e){}
+try {
+const parsedSettings = JSON.parse(savedSettings);
+if (!isValidImageUrl(parsedSettings.banner)) delete parsedSettings.banner;
+if (!isValidImageUrl(parsedSettings.logo)) delete parsedSettings.logo;
+applySettingsObject(parsedSettings);
+} catch(e){}
 }
 ​const savedSongs = localStorage.getItem('djSongs');
 if (savedSongs) {
@@ -849,11 +864,15 @@ setTimeout(() => { toast.style.display = 'none'; }, 3200);
 if (!item) return;
 if (isValidImageUrl(item.logo)) {
 document.getElementById('siteLogo').src = item.logo;
+} else {
+document.getElementById('siteLogo').src = DEFAULT_LOGO;
 }
-if (isValidImageUrl(item.banner)) {
+​if (isValidImageUrl(item.banner)) {
 document.getElementById('siteBanner').src = item.banner;
+} else {
+document.getElementById('siteBanner').src = DEFAULT_BANNER;
 }
-if (item.bgFx) applyBackground(item.bgFx);
+​if (item.bgFx) applyBackground(item.bgFx);
 if (item.color) document.documentElement.style.setProperty('--primary-color', item.color);
 if (item.font) document.body.style.fontFamily = item.font;
 if (item.marquee) document.getElementById('siteMarquee').innerText = item.marquee;
@@ -1066,13 +1085,14 @@ url: mediaUrl,
 date: new Date().toLocaleDateString('en-GB'),
 timestamp: Date.now()
 };
-​if(window.cloudSaveSong) {
-await window.cloudSaveSong(newSong);
-} else {
-newSong.id = 'local_' + Date.now();
-window.allSongs.unshift(newSong);
+​// Render immediately and also push to Cloud
+const tempId = 'local_' + Date.now();
+const optimisticSong = { ...newSong, id: tempId };
+window.allSongs.unshift(optimisticSong);
 localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
 filterCategory('All');
+​if(window.cloudSaveSong) {
+await window.cloudSaveSong(newSong);
 }
 ​window.currentCategory = 'All';
 const menuItems = document.querySelectorAll('.playlist-menu li');
@@ -1217,7 +1237,7 @@ let deleteBtn = window.isAdmin ? <button class="delete-btn" onclick="deleteSong(
 };
 ​initDefaults();
 </script>
-​<!-- Direct Cloud Firestore Connection (Without Auth Block!) -->
+​<!-- Direct Cloud Firestore Connection (Auto-Sync & Clean Fallback) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -1237,6 +1257,13 @@ const SETTINGS_DOC = doc(db, 'settings', 'studio_config');
 onSnapshot(SETTINGS_DOC, (docSnap) => {
 if (docSnap.exists()) {
 const data = docSnap.data();
+// Scrub any old invalid placeholder URLs from cloud data
+if (data.banner && !isValidImageUrl(data.banner)) {
+delete data.banner;
+}
+if (data.logo && !isValidImageUrl(data.logo)) {
+delete data.logo;
+}
 applySettingsObject(data);
 const currentLocal = JSON.parse(localStorage.getItem('djSettings') || '{}');
 localStorage.setItem('djSettings', JSON.stringify({ ...currentLocal, ...data }));
@@ -1244,7 +1271,8 @@ localStorage.setItem('djSettings', JSON.stringify({ ...currentLocal, ...data }))
 }, (err) => {
 console.warn("Settings sync info:", err);
 });
-​// Live listener for Songs across all devices
+​// Live listener for Songs across all devices + Auto-Sync local tracks to Cloud
+let hasSeeded = false;
 onSnapshot(SONGS_COLLECTION, (snapshot) => {
 const fetchedSongs = [];
 snapshot.forEach(docItem => {
@@ -1256,17 +1284,23 @@ fetchedSongs.push(data);
 window.allSongs = fetchedSongs;
 localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
 filterCategory(window.currentCategory);
-} else {
-// Seed the default Shyam Baba track to Cloud so database is never empty
-addDoc(SONGS_COLLECTION, {
-title: 'DJ Mr Jhansi Official Video Mix',
-category: 'Khatu Shyam Ji',
-ratio: 'YouTube Size (16:9)',
-youtube: 'https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM',
-url: 'https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM',
-date: '15/10/2026',
-timestamp: 1700000000000
-}).catch(() => {});
+} else if (!hasSeeded) {
+hasSeeded = true;
+// Upload existing local songs or default Shyam Baba track to Cloud automatically
+const localSaved = JSON.parse(localStorage.getItem('djSongs') || '[]');
+const songsToUpload = localSaved.length > 0 ? localSaved : DEFAULT_SONGS;
+songsToUpload.forEach(songItem => {
+const cleanSong = {
+title: songItem.title || 'DJ Mr Jhansi Official Video Mix',
+category: songItem.category || 'Khatu Shyam Ji',
+ratio: songItem.ratio || 'YouTube Size (16:9)',
+youtube: songItem.youtube || songItem.url || '',
+url: songItem.url || songItem.youtube || '',
+date: songItem.date || '15/10/2026',
+timestamp: songItem.timestamp || Date.now()
+};
+addDoc(SONGS_COLLECTION, cleanSong).catch(() => {});
+});
 }
 }, (err) => {
 console.warn("Songs sync info:", err);
