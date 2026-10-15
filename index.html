@@ -228,7 +228,7 @@
       font-weight: bold;
     }
 
-    /* Side Promo & Contact Box */
+    /* Side Promo Box */
     .promo-side-box {
       margin-top: 16px;
       padding: 12px;
@@ -271,7 +271,7 @@
     .btn-call { background-color: #0288d1; }
     .btn-wa { background-color: #25D366; }
 
-    /* Content Area & Cards */
+    /* Content Area */
     .content-area {
       flex: 3;
       min-width: 280px;
@@ -552,7 +552,7 @@
       width: 0%;
       height: 18px;
       background-color: #4CAF50;
-      transition: width 0.2s;
+      transition: width 0.1s linear;
     }
 
     .progress-text {
@@ -560,6 +560,7 @@
       margin-top: 5px;
       font-size: 0.84rem;
       color: #fff;
+      font-weight: bold;
     }
 
     .btn-next {
@@ -612,7 +613,6 @@
 </head>
 <body>
 
-  <!-- यह बैकग्राउंड कभी खाली नहीं होगा -->
   <div id="bgImage"></div>
   <video id="bgVideo" autoplay loop muted playsinline></video>
   <div id="bg-overlay"></div>
@@ -663,7 +663,7 @@
         <li onclick="filterCategory('Lord Ganesha Songs', this)">🟡 गणेश भगवान सॉन्ग्स</li>
       </ul>
 
-      <!-- Side Promo & Contact Box -->
+      <!-- Side Promo Box -->
       <div class="promo-side-box">
         <h4 id="promoHeading">🎧 DJ सॉन्ग या App बनवाएं!</h4>
         <p id="promoSubtext">अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या मोबाइल ऐप बनवाने के लिए संपर्क करें!</p>
@@ -718,14 +718,14 @@
       <div class="form-group" style="border: 1px solid var(--primary-color);">
         <label>⚡ Choose Upload Type</label>
         <select id="uploadType" onchange="toggleUploadMode()">
-          <option value="youtube">▶ YouTube Video Link</option>
+          <option value="youtube">▶ YouTube Video Link (यूट्यूब लिंक)</option>
           <option value="mega">🌐 Mega.nz / Cloud Direct Link</option>
-          <option value="file">🎵 Upload MP3 / Video File</option>
+          <option value="file">🎵 Upload MP3 / Video File (फोन से)</option>
         </select>
       </div>
 
       <div class="form-group" id="youtubeGroup">
-        <label>YouTube Link</label>
+        <label>YouTube Link (लिंक यहाँ पेस्ट करें)</label>
         <input type="text" id="youtubeLink" placeholder="https://youtu.be/..." oninput="autoDetectYouTube()">
         <div id="ytPreviewBox" style="display:none; margin-top:8px; text-align:center;">
           <img id="ytPreviewImg" src="" style="width:100%; max-height:140px; object-fit:cover; border-radius:6px; border:1px solid #ff2a5f;">
@@ -744,7 +744,7 @@
       </div>
 
       <div class="form-group">
-        <label>🎵 Track Title</label>
+        <label>🎵 Track Title (गाने का नाम)</label>
         <input type="text" id="songTitle" placeholder="e.g. DJ Mr Jhansi Official Video Mix">
       </div>
 
@@ -829,7 +829,7 @@
         <input type="text" id="contactNumberInput" placeholder="919876543210">
         
         <label style="margin-top:8px;">📢 Side Promo Message</label>
-        <input type="text" id="promoTextInput" placeholder="अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या ऐप बनवाने के लिए संपर्क करें!">
+        <input type="text" id="promoTextInput" placeholder="अपने नाम का DJ रीमिक्स सॉन्ग बनवाने के लिए संपर्क करें!">
 
         <label style="margin-top:8px;">📝 Running Text (नीचे चलने वाली पट्टी)</label>
         <input type="text" id="marqueeTextInput" placeholder="WELCOME TO DJ MR JHANSI OFFICIAL STUDIO...">
@@ -889,33 +889,6 @@
       return null;
     }
 
-    function compressImageToDataUrl(file, maxWidth, quality) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            if (width > maxWidth) {
-              height = Math.round((height * maxWidth) / width);
-              width = maxWidth;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', quality));
-          };
-          img.onerror = reject;
-          img.src = event.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
     function updateAdminUI() {
       if (window.isAdminLoggedIn) {
         document.getElementById('loginBtn').style.display = 'none';
@@ -945,7 +918,7 @@
         updateAdminUI();
         closeModals();
       } else {
-        alert("गलत Gmail ID या PIN! (Default Gmail: ritujhansi01@gmail.com | PIN: 7860)");
+        alert("गलत Gmail ID या PIN! (Default: ritujhansi01@gmail.com | PIN: 7860)");
       }
     }
 
@@ -1081,6 +1054,10 @@
       }
     }
 
+    /* ---------------------------------------------------------------------
+       अचूक ब्रह्मास्त्र: 1% से 100% लाइव प्रोग्रेस वाला असली अपलोडर 
+       (अब कभी स्क्रीन बीच में नहीं टंगेगी, न ही हैंग होगी)
+       --------------------------------------------------------------------- */
     async function uploadTrack() {
       const mode = document.getElementById('uploadType').value;
       const title = document.getElementById('songTitle').value.trim() || "DJ Mr Jhansi Mix";
@@ -1090,16 +1067,19 @@
       const megaLink = document.getElementById('megaLink').value.trim();
       const file = document.getElementById('songFile').files[0];
 
-      if (mode === 'youtube' && !ytLink) return alert("कृपया YouTube लिंक पेस्ट करें!");
-      if (mode === 'mega' && !megaLink) return alert("कृपया Mega.nz लिंक पेस्ट करें!");
-      if (mode === 'file' && !file) return alert("कृपया अपलोड करने के लिए फाइल चुनें!");
+      if (mode === 'youtube' && !ytLink) return alert("❌ कृपया YouTube लिंक पेस्ट करें!");
+      if (mode === 'mega' && !megaLink) return alert("❌ कृपया Mega.nz लिंक पेस्ट करें!");
+      if (mode === 'file' && !file) return alert("❌ कृपया अपलोड करने के लिए फाइल चुनें!");
 
       document.getElementById('startUploadBtn').style.display = 'none';
       document.getElementById('uploadProgressContainer').style.display = 'block';
-      document.getElementById('uploadProgressBar').style.width = '50%';
-      document.getElementById('uploadProgressText').innerText = "सर्वर पर सेव हो रहा है...";
+      document.getElementById('uploadProgressBar').style.width = '2%';
+      document.getElementById('uploadProgressText').innerText = "शुरू हो रहा है...";
 
       const finishAndSaveTrack = async (mediaUrl) => {
+        document.getElementById('uploadProgressBar').style.width = '90%';
+        document.getElementById('uploadProgressText').innerText = "डेटाबेस में सेव हो रहा है...";
+        
         const ytId = extractYouTubeId(mode === 'youtube' ? ytLink : mediaUrl);
         const newSongObj = {
           title: title,
@@ -1113,10 +1093,15 @@
         };
 
         if (window.addCloudSong) {
-          await window.addCloudSong(newSongObj);
-          document.getElementById('uploadProgressBar').style.width = '100%';
-          document.getElementById('uploadProgressText').innerText = "✅ 100% - क्लाउड डेटाबेस में सेव हो गया!";
-          document.getElementById('uploadNextBtn').style.display = 'block';
+          const success = await window.addCloudSong(newSongObj);
+          if(success) {
+             document.getElementById('uploadProgressBar').style.width = '100%';
+             document.getElementById('uploadProgressText').innerText = "✅ 100% सक्सेस! गाना अपलोड हो गया!";
+             document.getElementById('uploadNextBtn').style.display = 'block';
+          } else {
+             document.getElementById('startUploadBtn').style.display = 'block';
+             document.getElementById('uploadProgressText').innerText = "❌ क्लाउड में सेव नहीं हो पाया!";
+          }
         }
       };
 
@@ -1126,13 +1111,27 @@
         formData.append("upload_preset", UPLOAD_PRESET);
         const xhr = new XMLHttpRequest();
         xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
+        
+        // यह है लाइव 1 से 100 भागने वाला कोड
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 85); // 85% तक फाइल अपलोड, 15% डेटाबेस सेव
+            document.getElementById('uploadProgressBar').style.width = percent + '%';
+            document.getElementById('uploadProgressText').innerText = percent + "% - फाइल सर्वर पर जा रही है...";
+          }
+        };
+
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             finishAndSaveTrack(JSON.parse(xhr.responseText).secure_url);
           } else {
-            alert("अपलोड फेल।");
+            alert("❌ अपलोड फेल! फाइल साइज़ बड़ा हो सकता है। कृपया Mega लिंक का प्रयोग करें।");
             resetUploadUI();
           }
+        };
+        xhr.onerror = () => {
+           alert("❌ इंटरनेट कनेक्शन टूट गया। दोबारा प्रयास करें!");
+           resetUploadUI();
         };
         xhr.send(formData);
       } else if (mode === 'mega') {
@@ -1144,41 +1143,51 @@
 
     function finishUpload() { closeModals(); resetUploadUI(); }
 
+    /* ---------------------------------------------------------------------
+       सेटिंग्स अपलोड (Logo/Banner) - लाइव प्रोग्रेस के साथ 
+       --------------------------------------------------------------------- */
     async function uploadSettingFile(inputId, settingKey) {
       const file = document.getElementById(inputId).files[0];
-      if (!file) return alert("कृपया पहले फोटो चुनें!");
+      if (!file) return alert("❌ कृपया पहले फोटो चुनें!");
 
       document.getElementById('settingProgressContainer').style.display = 'block';
       document.getElementById('settingNextBtn').style.display = 'none';
-      document.getElementById('settingProgressBar').style.width = '30%';
-
-      if (file.type.startsWith('image/') && !file.type.includes('gif')) {
-        try {
-          const maxW = (settingKey === 'logo') ? 300 : 1200;
-          const compressedDataUrl = await compressImageToDataUrl(file, maxW, 0.82);
-          let updateData = {}; updateData[settingKey] = compressedDataUrl;
-          applySettingsToDOM(updateData);
-          if (window.saveCloudSettings) await window.saveCloudSettings(updateData);
-          document.getElementById('settingProgressBar').style.width = '100%';
-          document.getElementById('settingProgressText').innerText = "✅ 100% - क्लाउड में सेव हो गया!";
-          document.getElementById('settingNextBtn').style.display = 'block';
-          return;
-        } catch (err) {}
-      }
+      document.getElementById('settingProgressBar').style.width = '5%';
+      document.getElementById('settingProgressText').innerText = '0% - शुरू हो रहा है...';
 
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", UPLOAD_PRESET);
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
+      
+      xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 90);
+            document.getElementById('settingProgressBar').style.width = percent + '%';
+            document.getElementById('settingProgressText').innerText = percent + "% - फोटो अपलोड हो रही है...";
+          }
+      };
+
       xhr.onload = async () => {
         if (xhr.status >= 200 && xhr.status < 300) {
+          document.getElementById('settingProgressText').innerText = "डेटाबेस में सेव हो रहा है...";
           let updateData = {}; updateData[settingKey] = JSON.parse(xhr.responseText).secure_url;
           applySettingsToDOM(updateData);
-          if (window.saveCloudSettings) await window.saveCloudSettings(updateData);
+          if (window.saveCloudSettings) {
+              await window.saveCloudSettings(updateData);
+          }
           document.getElementById('settingProgressBar').style.width = '100%';
+          document.getElementById('settingProgressText').innerText = "✅ 100% - फोटो हमेशा के लिए सेव हो गई!";
           document.getElementById('settingNextBtn').style.display = 'block';
+        } else {
+          alert("❌ फोटो अपलोड फेल हो गया! नेट चेक करें।");
+          resetSettingsUI();
         }
+      };
+      xhr.onerror = () => {
+          alert("❌ इंटरनेट टूट गया।");
+          resetSettingsUI();
       };
       xhr.send(formData);
     }
@@ -1262,10 +1271,10 @@
     };
 
     updateAdminUI();
-    if(window.allSongs.length > 0) renderSongs(); // Instant Render
+    if(window.allSongs.length > 0) renderSongs();
   </script>
 
-  <!-- Solid Firebase Connection -->
+  <!-- Solid Firebase Connection with Timeout Handling -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -1277,4 +1286,17 @@
       storageBucket: "dj-mr-jhansi.firebasestorage.app",
       messagingSenderId: "455631977039",
       appId: "1:455631977039:web:ff10f18fc1bf91e2af083a",
-      measurementId
+      measurementId: "G-T121400XKZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); 
+    const settingsDocRef = doc(db, "studio_config", "main_settings");
+    const songsColRef = collection(db, "songs");
+
+    window.saveCloudSettings = async function(newSettings) {
+      try { 
+         // 10 second timeout for saving settings
+         const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 10000));
+         await Promise.race([setDoc(settingsDocRef, newSettings, { merge: true }), timeout]); 
+         return true;
