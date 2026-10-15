@@ -132,43 +132,43 @@
       font-size: 0.9rem;
     }
 
+    /* Refined compact promo banner moved to side/bottom area or neatly integrated */
     .promo-banner {
-      margin: 0 20px 10px 20px;
-      padding: 15px 20px;
+      margin: 15px 20px;
+      padding: 12px 18px;
       background: linear-gradient(135deg, rgba(26, 26, 36, 0.95), rgba(45, 15, 30, 0.95));
       border: 1px solid var(--primary-color);
-      border-left: 5px solid var(--primary-color);
-      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 8px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
     .promo-text-box {
       flex: 2;
-      min-width: 260px;
+      min-width: 240px;
     }
 
     .promo-text-box h3 {
-      margin: 0 0 6px 0;
+      margin: 0 0 4px 0;
       color: var(--primary-color);
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
+      font-size: 1rem;
     }
 
     .promo-text-box p {
       margin: 0;
-      color: #eee;
-      font-size: 0.9rem;
-      line-height: 1.4;
+      color: #ddd;
+      font-size: 0.82rem;
+      line-height: 1.35;
     }
 
     .promo-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
       align-items: center;
     }
@@ -177,26 +177,26 @@
       background-color: #2196f3;
       color: white;
       text-decoration: none;
-      padding: 9px 14px;
-      border-radius: 6px;
+      padding: 7px 12px;
+      border-radius: 5px;
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .btn-wa-contact {
       background-color: #25D366;
       color: white;
       text-decoration: none;
-      padding: 9px 14px;
-      border-radius: 6px;
+      padding: 7px 12px;
+      border-radius: 5px;
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .forgot-pin-link {
@@ -224,6 +224,9 @@
       border-radius: 10px;
       height: fit-content;
       border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .playlist-section-title {
@@ -599,19 +602,6 @@
       z-index: 2000;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
-    
-    .db-warning {
-      background: rgba(255, 0, 0, 0.2);
-      border: 1px solid #ff3366;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    
-    .db-warning h3 {
-      color: #ff3366;
-      margin-top: 0;
-    }
   </style>
 </head>
 <body>
@@ -642,19 +632,20 @@
     <p>Download High-Quality Tracks directly from Cloud | Official Database</p>
   </div>
 
-  <div class="promo-banner" id="promoBannerSection">
-    <div class="promo-text-box">
-      <h3 id="promoHeading">🎧 अपना खुद का DJ सॉन्ग, वेबसाइट या एप्लीकेशन बनवाएं! 💻</h3>
-      <p id="promoDescription">अगर किसी को अपने नाम का DJ सॉन्ग / रीमिक्स बनवाना हो, या ऐसी ही खुद की वेबसाइट लिंक और मोबाइल एप्लीकेशन बनवानी हो, तो अभी हमसे संपर्क करें!</p>
-    </div>
-    <div class="promo-actions">
-      <a href="tel:+919999999999" id="promoCallBtn" class="btn-call">📞 Call: <span id="displayPhoneText">अपना नंबर सेटिंग्स में डालें</span></a>
-      <a href="https://wa.me/919999999999" target="_blank" id="promoWaBtn" class="btn-wa-contact">💬 WhatsApp पर बात करें</a>
-    </div>
-  </div>
-
   <div class="main-layout">
     <div class="sidebar">
+      <!-- Moved Promo Banner cleanly into sidebar/side area for better layout -->
+      <div class="promo-banner" id="promoBannerSection" style="margin:0 0 15px 0;">
+        <div class="promo-text-box">
+          <h3 id="promoHeading">🎧 DJ सॉन्ग या App बनवाएं!</h3>
+          <p id="promoDescription">अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या मोबाइल ऐप बनवाने के लिए संपर्क करें!</p>
+        </div>
+        <div class="promo-actions" style="margin-top:8px;">
+          <a href="tel:+919999999999" id="promoCallBtn" class="btn-call">📞 Call</a>
+          <a href="https://wa.me/919999999999" target="_blank" id="promoWaBtn" class="btn-wa-contact">💬 WhatsApp</a>
+        </div>
+      </div>
+
       <h3>🔥 Playlists</h3>
       <ul class="playlist-menu">
         <li class="active" onclick="filterCategory('All', this)">🏠 All Playlists</li>
@@ -950,7 +941,6 @@
         window.adminCredentials.phone = item.contactPhone;
         const cleanPhone = item.contactPhone.replace(/\D/g, '');
         const waNumber = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
-        document.getElementById('displayPhoneText').innerText = item.contactPhone;
         document.getElementById('promoCallBtn').href = 'tel:' + item.contactPhone;
         document.getElementById('promoWaBtn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent('नमस्ते DJ Mr Jhansi! मुझे DJ सॉन्ग / वेबसाइट / एप्लीकेशन बनवाने के बारे में जानकारी चाहिए।')}`;
         const phoneInput = document.getElementById('contactPhoneInput');
@@ -1311,7 +1301,6 @@
         filtered = window.allSongs.filter(s => categoryMatches(s.category, window.currentCategory));
       }
 
-      // Sort by newest first based on timestamp
       filtered.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
       if(filtered.length === 0) {
@@ -1387,8 +1376,6 @@
 
     const appId = 'dj-mr-jhansi-studio';
     
-    // ⚠️⚠️⚠️ FIREBASE CONFIG ⚠️⚠️⚠️
-    // यह आपका असली कोड है जो अब डायरेक्ट चालू हो गया है!
     const fbConfig = {
       apiKey: "AIzaSyDripMMFxcqxeG3j5gF9QL1adbO8_5oicw",
       authDomain: "dj-mr-jhansi.firebaseapp.com",
@@ -1409,14 +1396,14 @@
     async function connectToCloud() {
       try {
         await signInAnonymously(auth);
-        
         if (!auth.currentUser) return;
         isConnected = true;
         
         onSnapshot(SETTINGS_DOC, (docSnap) => {
           if (docSnap.exists()) {
-            applySettingsObject(docSnap.data());
-            localStorage.setItem('djSettings', JSON.stringify(docSnap.data()));
+            const data = docSnap.data();
+            applySettingsObject(data);
+            localStorage.setItem('djSettings', JSON.stringify(data));
           }
         }, (err) => { 
            console.error("Settings Load Error", err);
@@ -1444,12 +1431,17 @@
     }
 
     window.cloudSaveSetting = async (settingData) => {
+      // Fetch latest existing remote/local settings to merge, preventing data wipes on partial saves
       const currentSettings = JSON.parse(localStorage.getItem('djSettings') || '{}');
       const updated = {...currentSettings, ...settingData};
       localStorage.setItem('djSettings', JSON.stringify(updated));
       
       if(!isConnected) return;
-      try { await setDoc(SETTINGS_DOC, settingData, { merge: true }); } catch (e) {}
+      try { 
+        await setDoc(SETTINGS_DOC, settingData, { merge: true }); 
+      } catch (e) {
+        console.error("Error saving settings to cloud:", e);
+      }
     };
 
     window.cloudSaveSong = async (songData) => {
@@ -1462,9 +1454,7 @@
       try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'songs', songId)); } catch (e) {}
     };
 
-    // मैंने वो ब्लॉक करने वाली लाइन हटा दी है। अब यह सीधा आपके डेटाबेस से जुड़ेगा!
     connectToCloud();
-
   </script>
 </body>
 </html>
