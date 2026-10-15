@@ -613,6 +613,7 @@
 </head>
 <body>
 
+  <!-- यह बैकग्राउंड कभी खाली नहीं होगा -->
   <div id="bgImage"></div>
   <video id="bgVideo" autoplay loop muted playsinline></video>
   <div id="bg-overlay"></div>
@@ -677,6 +678,7 @@
     <div class="content-area">
       <h2>🔥 Trending DJ Mixes</h2>
       <div id="songsContainer" class="song-grid">
+         <!-- This loading text will only show for a fraction of a second -->
          <p style="color:#aaa;">गाड़िया लोड हो रही हैं...</p>
       </div>
     </div>
@@ -848,7 +850,6 @@
   </div>
 
   <script>
-    // 100% Guaranteed Local Storage Backup - So page NEVER goes blank on Refresh!
     const CLOUD_NAME = "sygcuspm";
     const UPLOAD_PRESET = "dj_mr_jhansi";
 
@@ -856,20 +857,6 @@
     window.currentCategory = 'All';
     window.adminPinCode = localStorage.getItem('dj_admin_pin') || '7860';
     window.isAdminLoggedIn = localStorage.getItem('dj_admin_logged_in') === 'true';
-
-    // LOAD SAVED DATA IMMEDIATELY ON REFRESH (0 Second Delay)
-    (function initLocalData() {
-       const savedSongs = localStorage.getItem('dj_all_songs_cache');
-       if(savedSongs) {
-          window.allSongs = JSON.parse(savedSongs);
-       }
-       const cLogo = localStorage.getItem('dj_saved_logo');
-       const cBanner = localStorage.getItem('dj_saved_banner');
-       const cBg = localStorage.getItem('dj_saved_bg');
-       if (cLogo && cLogo.startsWith('http')) document.getElementById('siteLogo').src = cLogo;
-       if (cBanner && cBanner.startsWith('http')) document.getElementById('siteBanner').src = cBanner;
-       if (cBg && cBg.startsWith('http')) applyBackground(cBg);
-    })();
 
     function extractYouTubeId(inputUrl) {
       if (!inputUrl || typeof inputUrl !== 'string') return null;
@@ -996,26 +983,25 @@
       document.getElementById('startUploadBtn').style.display = 'block';
       document.getElementById('uploadProgressContainer').style.display = 'none';
       document.getElementById('uploadNextBtn').style.display = 'none';
+      document.getElementById('uploadProgressBar').style.width = '0%';
     }
 
     function resetSettingsUI() {
       document.getElementById('settingProgressContainer').style.display = 'none';
       document.getElementById('settingNextBtn').style.display = 'none';
+      document.getElementById('settingProgressBar').style.width = '0%';
     }
 
     function applySettingsToDOM(cfg) {
       if (!cfg) return;
       if (cfg.logo && cfg.logo.startsWith('http')) {
         document.getElementById('siteLogo').src = cfg.logo;
-        localStorage.setItem('dj_saved_logo', cfg.logo);
       }
       if (cfg.banner && cfg.banner.startsWith('http')) {
         document.getElementById('siteBanner').src = cfg.banner;
-        localStorage.setItem('dj_saved_banner', cfg.banner);
       }
       if (cfg.bgFx && cfg.bgFx.startsWith('http')) {
         applyBackground(cfg.bgFx);
-        localStorage.setItem('dj_saved_bg', cfg.bgFx);
       }
       if (cfg.color) {
         document.documentElement.style.setProperty('--primary-color', cfg.color);
@@ -1054,10 +1040,8 @@
       }
     }
 
-    /* ---------------------------------------------------------------------
-       अचूक ब्रह्मास्त्र: 1% से 100% लाइव प्रोग्रेस वाला असली अपलोडर 
-       (अब कभी स्क्रीन बीच में नहीं टंगेगी, न ही हैंग होगी)
-       --------------------------------------------------------------------- */
+    let dbProgressInterval;
+
     async function uploadTrack() {
       const mode = document.getElementById('uploadType').value;
       const title = document.getElementById('songTitle').value.trim() || "DJ Mr Jhansi Mix";
@@ -1077,9 +1061,15 @@
       document.getElementById('uploadProgressText').innerText = "शुरू हो रहा है...";
 
       const finishAndSaveTrack = async (mediaUrl) => {
-        document.getElementById('uploadProgressBar').style.width = '90%';
-        document.getElementById('uploadProgressText').innerText = "डेटाबेस में सेव हो रहा है...";
-        
+        let currentProg = 85;
+        dbProgressInterval = setInterval(() => {
+          if (currentProg < 99) {
+            currentProg++;
+            document.getElementById('uploadProgressBar').style.width = currentProg + '%';
+            document.getElementById('uploadProgressText').innerText = currentProg + "% - डेटाबेस में सेव हो रहा है...";
+          }
+        }, 120);
+
         const ytId = extractYouTubeId(mode === 'youtube' ? ytLink : mediaUrl);
         const newSongObj = {
           title: title,
@@ -1092,16 +1082,20 @@
           timestamp: Date.now()
         };
 
+        let savedInCloud = false;
         if (window.addCloudSong) {
-          const success = await window.addCloudSong(newSongObj);
-          if(success) {
-             document.getElementById('uploadProgressBar').style.width = '100%';
-             document.getElementById('uploadProgressText').innerText = "✅ 100% सक्सेस! गाना अपलोड हो गया!";
-             document.getElementById('uploadNextBtn').style.display = 'block';
-          } else {
-             document.getElementById('startUploadBtn').style.display = 'block';
-             document.getElementById('uploadProgressText').innerText = "❌ क्लाउड में सेव नहीं हो पाया!";
-          }
+          savedInCloud = await window.addCloudSong(newSongObj);
+        }
+
+        clearInterval(dbProgressInterval);
+
+        if (savedInCloud) {
+          document.getElementById('uploadProgressBar').style.width = '100%';
+          document.getElementById('uploadProgressText').innerText = "✅ 100% सक्सेस! गाना अपलोड हो गया!";
+          document.getElementById('uploadNextBtn').style.display = 'block';
+        } else {
+          document.getElementById('startUploadBtn').style.display = 'block';
+          document.getElementById('uploadProgressText').innerText = "❌ क्लाउड में सेव नहीं हो पाया!";
         }
       };
 
@@ -1112,10 +1106,9 @@
         const xhr = new XMLHttpRequest();
         xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
         
-        // यह है लाइव 1 से 100 भागने वाला कोड
         xhr.upload.onprogress = (e) => {
           if (e.lengthComputable) {
-            const percent = Math.round((e.loaded / e.total) * 85); // 85% तक फाइल अपलोड, 15% डेटाबेस सेव
+            const percent = Math.round((e.loaded / e.total) * 85);
             document.getElementById('uploadProgressBar').style.width = percent + '%';
             document.getElementById('uploadProgressText').innerText = percent + "% - फाइल सर्वर पर जा रही है...";
           }
@@ -1125,12 +1118,12 @@
           if (xhr.status >= 200 && xhr.status < 300) {
             finishAndSaveTrack(JSON.parse(xhr.responseText).secure_url);
           } else {
-            alert("❌ अपलोड फेल! फाइल साइज़ बड़ा हो सकता है। कृपया Mega लिंक का प्रयोग करें।");
+            alert("❌ फाइल अपलोड फेल! फाइल साइज ज्यादा हो सकता है।");
             resetUploadUI();
           }
         };
         xhr.onerror = () => {
-           alert("❌ इंटरनेट कनेक्शन टूट गया। दोबारा प्रयास करें!");
+           alert("❌ इंटरनेट कनेक्शन टूट गया।");
            resetUploadUI();
         };
         xhr.send(formData);
@@ -1143,17 +1136,43 @@
 
     function finishUpload() { closeModals(); resetUploadUI(); }
 
-    /* ---------------------------------------------------------------------
-       सेटिंग्स अपलोड (Logo/Banner) - लाइव प्रोग्रेस के साथ 
-       --------------------------------------------------------------------- */
+    let settingDbInterval;
+    
     async function uploadSettingFile(inputId, settingKey) {
       const file = document.getElementById(inputId).files[0];
       if (!file) return alert("❌ कृपया पहले फोटो चुनें!");
 
       document.getElementById('settingProgressContainer').style.display = 'block';
       document.getElementById('settingNextBtn').style.display = 'none';
-      document.getElementById('settingProgressBar').style.width = '5%';
-      document.getElementById('settingProgressText').innerText = '0% - शुरू हो रहा है...';
+      document.getElementById('settingProgressBar').style.width = '2%';
+      document.getElementById('settingProgressText').innerText = 'शुरू हो रहा है...';
+
+      const finishSettingSave = async (mediaUrl) => {
+         let currentProg = 90;
+         settingDbInterval = setInterval(() => {
+           if(currentProg < 99) {
+             currentProg++;
+             document.getElementById('settingProgressBar').style.width = currentProg + '%';
+             document.getElementById('settingProgressText').innerText = currentProg + "% - डेटाबेस में सेव हो रहा है...";
+           }
+         }, 100);
+
+         let updateData = {}; updateData[settingKey] = mediaUrl;
+         applySettingsToDOM(updateData);
+         
+         let savedOk = false;
+         if (window.saveCloudSettings) savedOk = await window.saveCloudSettings(updateData);
+
+         clearInterval(settingDbInterval);
+
+         if(savedOk) {
+            document.getElementById('settingProgressBar').style.width = '100%';
+            document.getElementById('settingProgressText').innerText = "✅ 100% - सेव हो गया!";
+            document.getElementById('settingNextBtn').style.display = 'block';
+         } else {
+            document.getElementById('settingProgressText').innerText = "❌ सेव नहीं हो पाया!";
+         }
+      };
 
       const formData = new FormData();
       formData.append("file", file);
@@ -1162,32 +1181,24 @@
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
       
       xhr.upload.onprogress = (e) => {
-          if (e.lengthComputable) {
+         if (e.lengthComputable) {
             const percent = Math.round((e.loaded / e.total) * 90);
             document.getElementById('settingProgressBar').style.width = percent + '%';
             document.getElementById('settingProgressText').innerText = percent + "% - फोटो अपलोड हो रही है...";
-          }
+         }
       };
 
-      xhr.onload = async () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          document.getElementById('settingProgressText').innerText = "डेटाबेस में सेव हो रहा है...";
-          let updateData = {}; updateData[settingKey] = JSON.parse(xhr.responseText).secure_url;
-          applySettingsToDOM(updateData);
-          if (window.saveCloudSettings) {
-              await window.saveCloudSettings(updateData);
-          }
-          document.getElementById('settingProgressBar').style.width = '100%';
-          document.getElementById('settingProgressText').innerText = "✅ 100% - फोटो हमेशा के लिए सेव हो गई!";
-          document.getElementById('settingNextBtn').style.display = 'block';
-        } else {
-          alert("❌ फोटो अपलोड फेल हो गया! नेट चेक करें।");
-          resetSettingsUI();
-        }
+      xhr.onload = () => {
+         if (xhr.status >= 200 && xhr.status < 300) {
+            finishSettingSave(JSON.parse(xhr.responseText).secure_url);
+         } else {
+            alert("❌ अपलोड फेल हो गया।");
+            resetSettingsUI();
+         }
       };
       xhr.onerror = () => {
-          alert("❌ इंटरनेट टूट गया।");
-          resetSettingsUI();
+         alert("❌ इंटरनेट टूट गया।");
+         resetSettingsUI();
       };
       xhr.send(formData);
     }
@@ -1271,10 +1282,8 @@
     };
 
     updateAdminUI();
-    if(window.allSongs.length > 0) renderSongs();
   </script>
 
-  <!-- Solid Firebase Connection with Timeout Handling -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -1296,7 +1305,42 @@
 
     window.saveCloudSettings = async function(newSettings) {
       try { 
-         // 10 second timeout for saving settings
          const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 10000));
          await Promise.race([setDoc(settingsDocRef, newSettings, { merge: true }), timeout]); 
-         return true;
+         return true; 
+      } catch (err) { 
+         return false; 
+      }
+    };
+    
+    window.addCloudSong = async function(songData) {
+      try { 
+         const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 15000));
+         await Promise.race([addDoc(songsColRef, songData), timeout]); 
+         return true; 
+      } catch (err) { 
+         return false; 
+      }
+    };
+
+    window.deleteSongTrack = async function(docId) {
+      if (!confirm("क्या आप वाकई इस गाने को हटाना चाहते हैं?")) return;
+      try { await deleteDoc(doc(db, "songs", docId)); } catch (err) {}
+    };
+
+    onSnapshot(settingsDocRef, (docSnap) => {
+      if (docSnap.exists()) applySettingsToDOM(docSnap.data());
+    });
+
+    onSnapshot(songsColRef, (querySnapshot) => {
+      const cloudSongs = [];
+      querySnapshot.forEach((docItem) => { cloudSongs.push({ id: docItem.id, ...docItem.data() }); });
+      
+      if (cloudSongs.length > 0) {
+        window.allSongs = cloudSongs;
+        window.renderSongs();
+      }
+    });
+  </script>
+</body>
+</html>
