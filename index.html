@@ -257,33 +257,34 @@
       top: 0; left: 0; width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.9);
       justify-content: center;
-      align-items: flex-start;
-      padding-top: 40px;
+      align-items: center;
       z-index: 1000;
-      overflow-y: auto;
     }
 
     .modal-content {
       background-color: #1a1a24;
-      padding: 25px;
+      padding: 20px;
       border-radius: 10px;
       width: 90%;
       max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
       border: 1px solid var(--primary-color);
-      margin-bottom: 50px;
+      box-sizing: border-box;
     }
 
-    .modal-content h2 { margin-top: 0; color: var(--primary-color); border-bottom: 1px solid #444; padding-bottom: 10px; }
-    .form-group { margin-bottom: 12px; background: #2a2a35; padding: 10px; border-radius: 5px; }
-    .form-group label { display: block; margin-bottom: 6px; color: white; font-weight: bold; font-size: 0.9rem; }
+    .modal-content h2 { margin-top: 0; color: var(--primary-color); border-bottom: 1px solid #444; padding-bottom: 8px; font-size: 1.3rem; }
+    .form-group { margin-bottom: 10px; background: #2a2a35; padding: 8px; border-radius: 5px; }
+    .form-group label { display: block; margin-bottom: 4px; color: white; font-weight: bold; font-size: 0.85rem; }
     .form-group input, .form-group select {
       width: 100%;
-      padding: 9px;
+      padding: 8px;
       border-radius: 5px;
       border: 1px solid #555;
       background-color: #111;
       color: white;
       box-sizing: border-box;
+      font-size: 0.9rem;
     }
 
     .progress-container {
@@ -291,28 +292,28 @@
       width: 100%;
       background-color: #333;
       border-radius: 5px;
-      margin-top: 15px;
+      margin-top: 10px;
       overflow: hidden;
     }
     .progress-bar {
       width: 0%;
-      height: 20px;
+      height: 16px;
       background-color: #4CAF50;
       transition: width 0.3s;
     }
     .progress-text {
       text-align: center;
-      margin-top: 5px;
-      font-size: 0.9rem;
+      margin-top: 3px;
+      font-size: 0.85rem;
       color: white;
     }
     .btn-next {
       display: none;
       background-color: #4CAF50;
       width: 100%;
-      margin-top: 15px;
-      padding: 12px;
-      font-size: 1.1rem;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 1rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -347,8 +348,8 @@
     </div>
     <div class="admin-controls">
       <button class="btn btn-login" id="loginBtn" onclick="openLogin()">🔐 Login</button>
-      <button class="btn btn-settings" id="settingsBtn" style="display:none;" onclick="openSettings()">⚙️ Theme & FX Settings</button>
-      <button class="btn btn-upload" id="uploadBtn" style="display:none;" onclick="openUpload()">+ Upload Song</button>
+      <button class="btn btn-settings" id="settingsBtn" style="display:none;" onclick="openSettings()">⚙️ Settings</button>
+      <button class="btn btn-upload" id="uploadBtn" style="display:none;" onclick="openUpload()">+ Upload</button>
     </div>
   </header>
 
@@ -409,8 +410,8 @@
         <label>Enter PIN</label>
         <input type="password" id="adminPin" placeholder="Enter 4-digit PIN">
       </div>
-      <button class="btn btn-login" style="width:100%; padding:12px;" onclick="checkPin()">Login Now</button>
-      <button class="btn" style="width:100%; margin-top:10px; background:#444;" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-login" style="width:100%; padding:10px;" onclick="checkPin()">Login Now</button>
+      <button class="btn" style="width:100%; margin-top:8px; background:#444;" onclick="closeModals()">Cancel</button>
     </div>
   </div>
 
@@ -474,18 +475,16 @@
         <input type="file" id="songFile" accept="audio/*,video/*" style="color:white;">
       </div>
       
-      <button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:12px;" onclick="uploadTrack()">Start Upload</button>
+      <button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:10px;" onclick="uploadTrack()">Start Upload</button>
       
       <div class="progress-container" id="uploadProgressContainer">
         <div class="progress-bar" id="uploadProgressBar"></div>
         <div class="progress-text" id="uploadProgressText">0%</div>
       </div>
       
-      <!-- Next & Close Buttons after upload -->
-      <button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">✅ Upload Done! Click Next 👉</button>
-      <button class="btn" id="uploadCloseBtn" style="display:none; width:100%; margin-top:10px; background:#e91e63;" onclick="closeModals()">❌ Close Panel</button>
-      
-      <button class="btn" id="uploadCancelBtn" style="width:100%; margin-top:10px; background:#444;" onclick="closeModals()">Cancel</button>
+      <button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">✅ Upload Done! Close Panel ❌</button>
+      <button class="btn" id="uploadCloseBtn" style="display:block; width:100%; margin-top:8px; background:#e91e63;" onclick="closeModals()">❌ Close Panel</button>
+      <button class="btn" id="uploadCancelBtn" style="width:100%; margin-top:8px; background:#444;" onclick="closeModals()">Cancel</button>
     </div>
   </div>
 
@@ -503,31 +502,31 @@
           <option value="'Courier New', monospace">Courier New</option>
         </select>
         
-        <label style="margin-top:10px;">🎨 Theme Color</label>
-        <input type="color" id="themeColor" value="#ff3366" style="width:100%; height:40px; cursor:pointer;">
+        <label style="margin-top:8px;">🎨 Theme Color</label>
+        <input type="color" id="themeColor" value="#ff3366" style="width:100%; height:36px; cursor:pointer;">
 
-        <label style="margin-top:10px;">📝 Running Text (Marquee)</label>
+        <label style="margin-top:8px;">📝 Running Text (Marquee)</label>
         <input type="text" id="marqueeTextInput" placeholder="Type running text...">
 
-        <button class="btn" style="width:100%; margin-top:10px; background: #e91e63;" onclick="saveTextAndColorSettings()">Save Font & Color 💾</button>
+        <button class="btn" style="width:100%; margin-top:8px; background: #e91e63;" onclick="saveTextAndColorSettings()">Save Font & Color 💾</button>
       </div>
 
       <div class="form-group">
         <label>🖼️ Upload Logo</label>
         <input type="file" id="newLogoFile" accept="image/*" style="color:white;">
-        <button class="btn" style="width:100%; margin-top:5px; background:#2196f3;" onclick="uploadSettingFile('newLogoFile', 'dj_mr_jhansi_logo')">Upload Logo ⬆️</button>
+        <button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newLogoFile', 'dj_mr_jhansi_logo')">Upload Logo ⬆️</button>
       </div>
 
       <div class="form-group">
         <label>🎞️ Upload Banner</label>
         <input type="file" id="newBannerFile" accept="image/*" style="color:white;">
-        <button class="btn" style="width:100%; margin-top:5px; background:#2196f3;" onclick="uploadSettingFile('newBannerFile', 'dj_mr_jhansi_banner')">Upload Banner ⬆️</button>
+        <button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newBannerFile', 'dj_mr_jhansi_banner')">Upload Banner ⬆️</button>
       </div>
 
       <div class="form-group">
         <label>✨ Upload Background FX (GIF / MP4)</label>
         <input type="file" id="newFxFile" accept="image/gif,video/mp4" style="color:white;">
-        <button class="btn" style="width:100%; margin-top:5px; background:#2196f3;" onclick="uploadSettingFile('newFxFile', 'dj_mr_jhansi_bg')">Upload FX ⬆️</button>
+        <button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newFxFile', 'dj_mr_jhansi_bg')">Upload FX ⬆️</button>
       </div>
 
       <div class="progress-container" id="settingProgressContainer">
@@ -536,7 +535,7 @@
       </div>
       
       <button class="btn-next" id="settingNextBtn" onclick="finishSetting()">✅ Media Saved! Click Next 👉</button>
-      <button class="btn" style="width:100%; margin-top:15px; background:#444;" onclick="closeModals()">❌ Close Settings</button>
+      <button class="btn" style="width:100%; margin-top:10px; background:#444;" onclick="closeModals()">❌ Close Settings</button>
     </div>
   </div>
 
@@ -619,7 +618,7 @@
       document.getElementById('uploadCancelBtn').style.display = 'block';
       document.getElementById('uploadProgressContainer').style.display = 'none';
       document.getElementById('uploadNextBtn').style.display = 'none';
-      document.getElementById('uploadCloseBtn').style.display = 'none';
+      document.getElementById('uploadCloseBtn').style.display = 'block';
       document.getElementById('uploadProgressBar').style.width = '0%';
     }
 
@@ -687,7 +686,7 @@
           }).then(() => {
             document.getElementById('uploadProgressText').innerText = "100% - Saved to Database!";
             document.getElementById('uploadNextBtn').style.display = 'block';
-            document.getElementById('uploadCloseBtn').style.display = 'block'; // Show Close Button
+            document.getElementById('uploadCloseBtn').style.display = 'block';
           });
         }
       };
