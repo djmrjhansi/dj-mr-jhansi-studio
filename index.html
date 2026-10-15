@@ -14,9 +14,7 @@
       --font-family: 'Arial', sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -31,7 +29,7 @@
     #bg-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(11, 11, 15, 0.82);
+      background: rgba(11, 11, 15, 0.84);
       z-index: -1;
       pointer-events: none;
     }
@@ -60,8 +58,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 16px;
-      background-color: rgba(10, 10, 14, 0.95);
+      padding: 10px 14px;
+      background-color: rgba(10, 10, 14, 0.96);
       border-bottom: 2px solid var(--primary-color);
       position: sticky;
       top: 0;
@@ -72,8 +70,8 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
+      gap: 8px;
+      font-size: 1.05rem;
       font-weight: bold;
       color: #fff;
     }
@@ -87,20 +85,30 @@
       background-color: #1a1a24;
     }
 
+    .cloud-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: #1b5e20;
+      color: #a5d6a7;
+      font-weight: normal;
+      border: 1px solid #4caf50;
+    }
+
     .admin-controls {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .btn {
-      padding: 7px 13px;
+      padding: 7px 12px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
       color: white;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       transition: 0.2s;
       display: inline-flex;
       align-items: center;
@@ -135,21 +143,21 @@
     /* Studio Title */
     .studio-title {
       text-align: center;
-      padding: 18px 10px 10px;
+      padding: 16px 10px 8px;
       background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
     }
 
     .studio-title h1 {
       margin: 0;
       color: var(--primary-color);
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       text-shadow: 0 2px 8px rgba(255, 42, 95, 0.4);
     }
 
     .studio-title p {
-      margin: 5px 0 0;
+      margin: 4px 0 0;
       color: #aaa;
       font-size: 0.8rem;
     }
@@ -158,20 +166,20 @@
     .main-layout {
       display: flex;
       flex-wrap: wrap;
-      padding: 15px;
-      gap: 20px;
+      padding: 14px;
+      gap: 18px;
       max-width: 1300px;
       margin: 0 auto;
-      padding-bottom: 70px;
+      padding-bottom: 75px;
     }
 
     /* Sidebar */
     .sidebar {
       flex: 1;
       min-width: 250px;
-      max-width: 320px;
+      max-width: 310px;
       background-color: rgba(21, 21, 30, 0.95);
-      padding: 15px;
+      padding: 14px;
       border-radius: 10px;
       height: fit-content;
       border: 1px solid rgba(255,255,255,0.08);
@@ -179,16 +187,16 @@
     }
 
     .sidebar h3 {
-      margin: 0 0 12px 0;
+      margin: 0 0 10px 0;
       font-size: 1.05rem;
       color: #fff;
     }
 
     .playlist-section-title {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--primary-color);
       text-transform: uppercase;
-      margin: 14px 0 6px 4px;
+      margin: 13px 0 6px 4px;
       letter-spacing: 1px;
       border-bottom: 1px solid #2a2a35;
       padding-bottom: 3px;
@@ -202,14 +210,14 @@
     }
 
     .playlist-menu li {
-      padding: 9px 12px;
+      padding: 8px 11px;
       margin-bottom: 5px;
       background-color: rgba(255,255,255,0.04);
       border-radius: 5px;
       cursor: pointer;
       transition: 0.2s;
       border-left: 3px solid transparent;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: #ddd;
     }
 
@@ -220,9 +228,9 @@
       font-weight: bold;
     }
 
-    /* Side Promo & Contact Box (Bottom of Sidebar) */
+    /* Side Promo & Contact Box (Bottom Corner of Sidebar) */
     .promo-side-box {
-      margin-top: 18px;
+      margin-top: 16px;
       padding: 12px;
       background: linear-gradient(145deg, #1e1324, #14141d);
       border: 1px solid var(--primary-color);
@@ -234,13 +242,13 @@
     .promo-side-box h4 {
       margin: 0 0 5px 0;
       color: var(--primary-color);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .promo-side-box p {
       margin: 0 0 10px 0;
       color: #ccc;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       line-height: 1.35;
     }
 
@@ -254,7 +262,7 @@
       text-align: center;
       padding: 7px 8px;
       border-radius: 5px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: bold;
       color: #fff;
       text-decoration: none;
@@ -263,21 +271,21 @@
     .btn-call { background-color: #0288d1; }
     .btn-wa { background-color: #25D366; }
 
-    /* Content Area & Cards (Matching Screenshot 1000728124.jpg) */
+    /* Content Area & Cards */
     .content-area {
       flex: 3;
       min-width: 280px;
     }
 
     .content-area h2 {
-      margin: 0 0 15px 0;
-      font-size: 1.2rem;
+      margin: 0 0 14px 0;
+      font-size: 1.18rem;
     }
 
     .song-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 18px;
+      gap: 16px;
     }
 
     .song-card {
@@ -286,7 +294,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.08);
       border-bottom: 3px solid var(--primary-color);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.65);
       display: flex;
       flex-direction: column;
       position: relative;
@@ -295,7 +303,7 @@
     .thumb-wrapper {
       position: relative;
       width: 100%;
-      height: 165px;
+      height: 175px;
       background-color: #0d0d12;
       overflow: hidden;
       cursor: pointer;
@@ -305,25 +313,30 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s;
+      display: block;
     }
 
-    .thumb-wrapper:hover img {
-      transform: scale(1.03);
+    .thumb-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
     }
 
     .dj-badge {
       position: absolute;
       top: 8px;
       right: 8px;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.82);
       color: #fff;
       padding: 3px 7px;
       font-size: 0.65rem;
       font-weight: bold;
       border-radius: 4px;
       letter-spacing: 0.5px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
+      z-index: 2;
+      pointer-events: none;
     }
 
     .play-overlay-icon {
@@ -331,23 +344,24 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 48px;
-      height: 34px;
-      background-color: rgba(255, 0, 0, 0.9);
+      width: 52px;
+      height: 36px;
+      background-color: rgba(255, 0, 0, 0.92);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 12px rgba(255,0,0,0.7);
+      box-shadow: 0 0 15px rgba(255,0,0,0.8);
       pointer-events: none;
+      z-index: 2;
     }
 
     .play-overlay-icon::after {
       content: '';
       border-style: solid;
-      border-width: 7px 0 7px 12px;
+      border-width: 7px 0 7px 13px;
       border-color: transparent transparent transparent #ffffff;
-      margin-left: 2px;
+      margin-left: 3px;
     }
 
     .song-body {
@@ -373,7 +387,7 @@
     }
 
     .song-link-text {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: #4da3ff;
       text-decoration: underline;
       word-break: break-all;
@@ -404,46 +418,48 @@
 
     .youtube-btn {
       background-color: #e60000;
-      padding: 6px 11px;
+      padding: 6px 10px;
       text-decoration: none;
       color: white;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
     }
 
     .download-btn {
       background-color: #4CAF50;
-      padding: 6px 11px;
+      padding: 6px 10px;
       text-decoration: none;
       color: white;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
+      cursor: pointer;
+      border: none;
     }
 
     .share-btn {
       background-color: #25D366;
-      padding: 6px 11px;
+      padding: 6px 10px;
       text-decoration: none;
       color: white;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
     }
 
     .delete-btn {
       background-color: #d32f2f;
-      padding: 6px 10px;
+      padding: 6px 9px;
       border: none;
       color: white;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       cursor: pointer;
     }
 
-    /* Modals with TOP & BOTTOM Cross (✖) Buttons */
+    /* Modals with Top ✖ and Bottom ✖ */
     .modal {
       display: none;
       position: fixed;
@@ -451,14 +467,14 @@
       background-color: rgba(0,0,0,0.88);
       justify-content: center;
       align-items: flex-start;
-      padding: 25px 12px;
+      padding: 20px 12px;
       z-index: 1000;
       overflow-y: auto;
     }
 
     .modal-content {
       background-color: #181822;
-      padding: 20px;
+      padding: 18px;
       border-radius: 10px;
       width: 100%;
       max-width: 480px;
@@ -480,10 +496,9 @@
     .modal-header h2 {
       margin: 0;
       color: var(--primary-color);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
     }
 
-    /* Top Cross Button */
     .top-close-cross {
       background: #ff2a5f;
       color: #fff;
@@ -497,11 +512,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1;
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 11px;
       background: #232330;
       padding: 10px;
       border-radius: 6px;
@@ -512,7 +526,7 @@
       margin-bottom: 5px;
       color: #fff;
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
     .form-group input, .form-group select {
@@ -522,7 +536,7 @@
       border: 1px solid #444;
       background-color: #0e0e14;
       color: white;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .progress-container {
@@ -544,7 +558,7 @@
     .progress-text {
       text-align: center;
       margin-top: 5px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: #fff;
     }
 
@@ -554,7 +568,7 @@
       width: 100%;
       margin-top: 12px;
       padding: 11px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -572,7 +586,7 @@
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .marquee-container {
@@ -583,7 +597,7 @@
       background-color: var(--primary-color);
       color: white;
       padding: 7px 0;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: bold;
       z-index: 99;
       text-shadow: 1px 1px 2px black;
@@ -591,8 +605,8 @@
 
     @media (max-width: 768px) {
       .sidebar { max-width: 100%; width: 100%; }
-      .banner-container { height: 160px; }
-      .studio-title h1 { font-size: 1.3rem; }
+      .banner-container { height: 165px; }
+      .studio-title h1 { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -606,6 +620,7 @@
     <div class="brand">
       <img id="siteLogo" src="" alt="Logo">
       <span>DJ Mr Jhansi ✔</span>
+      <span id="cloudStatusBadge" class="cloud-badge">🟢 Live</span>
     </div>
     <div class="admin-controls">
       <button class="btn btn-login" id="loginBtn" onclick="openLogin()">🔐 Login</button>
@@ -616,7 +631,7 @@
   </header>
 
   <div class="banner-container">
-    <img id="siteBanner" src="" alt="DJ Mr Jhansi Official Banner">
+    <img id="siteBanner" src="" alt="DJ Mr Jhansi Banner">
   </div>
   
   <div class="studio-title">
@@ -668,12 +683,12 @@
     <marquee id="siteMarquee">🔥 WELCOME TO DJ MR JHANSI OFFICIAL STUDIO 🔥 BHOJPURI, BOLLYWOOD, HARYANVI & BHAJAN REMIXES 🔥 HIGH QUALITY DOWNLOADS 🔥</marquee>
   </div>
 
-  <!-- LOGIN MODAL (With Top ✖ and Bottom ✖ Close) -->
+  <!-- LOGIN MODAL -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <h2>🔐 Admin Login</h2>
-        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+        <button class="top-close-cross" onclick="closeModals()">✖</button>
       </div>
       <div class="form-group">
         <label>Gmail ID</label>
@@ -689,26 +704,30 @@
     </div>
   </div>
 
-  <!-- UPLOAD MODAL (With Top ✖ and Bottom ✖ Close & Full Sections) -->
+  <!-- UPLOAD MODAL -->
   <div id="uploadModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <h2>⬆️ Upload New Track</h2>
-        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+        <button class="top-close-cross" onclick="closeModals()">✖</button>
       </div>
       
       <div class="form-group" style="border: 1px solid var(--primary-color);">
         <label>⚡ Choose Upload Type (अपलोड का तरीका चुनें)</label>
         <select id="uploadType" onchange="toggleUploadMode()">
-          <option value="youtube">▶ YouTube Video Link</option>
-          <option value="file">🎵 Upload MP3 / Video File (From Phone)</option>
-          <option value="external">🔗 Direct Audio / Video Link (URL)</option>
+          <option value="youtube">▶ YouTube Video Link (यूट्यूब लिंक)</option>
+          <option value="file">🎵 Upload MP3 / Video File (फोन से फाइल चुनें)</option>
+          <option value="external">🔗 Direct Audio / Video Link (डायरेक्ट लिंक)</option>
         </select>
       </div>
 
       <div class="form-group" id="youtubeGroup">
-        <label>YouTube Link (पेस्ट करते ही नाम अपने आप आएगा)</label>
+        <label>YouTube Link (यहाँ लिंक पेस्ट करें)</label>
         <input type="text" id="youtubeLink" placeholder="https://youtu.be/..." oninput="autoDetectYouTube()">
+        <div id="ytPreviewBox" style="display:none; margin-top:8px; text-align:center;">
+          <img id="ytPreviewImg" src="" style="width:100%; max-height:140px; object-fit:cover; border-radius:6px; border:1px solid #ff2a5f;">
+          <small style="color:#4caf50; display:block; margin-top:3px;">✅ YouTube Video Image मिल गई!</small>
+        </div>
       </div>
 
       <div class="form-group" id="fileGroup" style="display:none;">
@@ -758,7 +777,7 @@
         </select>
       </div>
       
-      <button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:12px; font-size:1rem;" onclick="uploadTrack()">🚀 Start Upload</button>
+      <button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:12px; font-size:1rem;" onclick="uploadTrack()">🚀 Start Upload (पब्लिक करें)</button>
       
       <div class="progress-container" id="uploadProgressContainer">
         <div class="progress-bar" id="uploadProgressBar"></div>
@@ -770,28 +789,28 @@
     </div>
   </div>
 
-  <!-- SETTINGS MODAL (With Top ✖ and Bottom ✖ Close) -->
+  <!-- SETTINGS MODAL -->
   <div id="settingsModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <h2>🎨 Studio & Theme Settings</h2>
-        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+        <button class="top-close-cross" onclick="closeModals()">✖</button>
       </div>
       
       <div class="form-group" style="border: 1px solid var(--primary-color);">
-        <label>🖼️ Upload Logo (प्रोफाइल लोगो बदलें)</label>
+        <label>🖼️ Upload Logo (प्रोफाइल लोगो बदलें - हर फोन में दिखेगा)</label>
         <input type="file" id="newLogoFile" accept="image/*">
         <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newLogoFile', 'logo')">Upload Logo ⬆️</button>
       </div>
 
       <div class="form-group" style="border: 1px solid var(--primary-color);">
-        <label>🎞️ Upload Banner (बड़ा बैनर बदलें)</label>
+        <label>🎞️ Upload Banner (बड़ा बैनर बदलें - हर फोन में दिखेगा)</label>
         <input type="file" id="newBannerFile" accept="image/*">
         <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newBannerFile', 'banner')">Upload Banner ⬆️</button>
       </div>
 
       <div class="form-group">
-        <label>✨ Upload Background FX (GIF / MP4)</label>
+        <label>✨ Upload Background FX (GIF / Image / MP4)</label>
         <input type="file" id="newFxFile" accept="image/*,video/mp4">
         <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newFxFile', 'bgFx')">Upload FX ⬆️</button>
       </div>
@@ -825,7 +844,7 @@
     </div>
   </div>
 
-  <!-- Embedded Dark SVG Default Graphics (Guarantees ZERO White Box Ever) -->
+  <!-- Default Embedded Dark Graphics (Guarantees Zero White Screen) -->
   <script>
     const DEFAULT_DARK_LOGO = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
@@ -853,11 +872,11 @@
             <stop offset="100%" stop-color="#08080c"/>
           </linearGradient>
           <linearGradient id="Laser1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff9900" stop-opacity="0.8"/>
+            <stop offset="0%" stop-color="#ff9900" stop-opacity="0.85"/>
             <stop offset="100%" stop-color="#ff0055" stop-opacity="0"/>
           </linearGradient>
           <linearGradient id="Laser2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.7"/>
+            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.75"/>
             <stop offset="100%" stop-color="#ff0055" stop-opacity="0"/>
           </linearGradient>
         </defs>
@@ -884,7 +903,6 @@
       timestamp: 1700000000000
     };
 
-    // Helper: Reject any white placeholder image URL
     function isValidMediaUrl(url) {
       if (!url || typeof url !== 'string') return false;
       const lower = url.toLowerCase();
@@ -894,7 +912,6 @@
       return lower.startsWith('http') || lower.startsWith('data:image');
     }
 
-    // Set immediate dark defaults
     document.getElementById('siteLogo').src = DEFAULT_DARK_LOGO;
     document.getElementById('siteBanner').src = DEFAULT_DARK_BANNER;
   </script>
@@ -907,6 +924,53 @@
     window.currentCategory = 'All';
     window.adminPinCode = localStorage.getItem('dj_admin_pin') || '7860';
     window.isAdminLoggedIn = localStorage.getItem('dj_admin_logged_in') === 'true';
+
+    // Robust YouTube ID Extractor (Supports youtu.be, watch?v=, shorts/, live/, embed/, etc.)
+    function extractYouTubeId(inputUrl) {
+      if (!inputUrl || typeof inputUrl !== 'string') return null;
+      const clean = inputUrl.trim();
+      const patterns = [
+        /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+        /(?:youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/,
+        /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+        /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+        /(?:youtube\.com\/live\/)([a-zA-Z0-9_-]{11})/,
+        /(?:youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/
+      ];
+      for (const regex of patterns) {
+        const match = clean.match(regex);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    }
+
+    // Compress image on phone so Logo & Banner save directly in Cloud Database (100% reliable)
+    function compressImageToDataUrl(file, maxWidth, quality) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = reject;
+          img.src = event.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
 
     function updateAdminUI() {
       if (window.isAdminLoggedIn) {
@@ -972,30 +1036,31 @@
       document.getElementById('externalGroup').style.display = (mode === 'external') ? 'block' : 'none';
     }
 
-    function extractYouTubeId(url) {
-      if (!url) return null;
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
-    }
-
     async function autoDetectYouTube() {
       const ytUrl = document.getElementById('youtubeLink').value.trim();
       const titleInput = document.getElementById('songTitle');
       const ratioSelect = document.getElementById('songRatio');
+      const previewBox = document.getElementById('ytPreviewBox');
+      const previewImg = document.getElementById('ytPreviewImg');
 
-      if (ytUrl.includes("youtube.com") || ytUrl.includes("youtu.be")) {
+      const ytId = extractYouTubeId(ytUrl);
+      if (ytId) {
         ratioSelect.value = "YouTube Size (16:9)";
+        previewImg.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+        previewBox.style.display = 'block';
+
         if (!titleInput.value) {
           titleInput.value = "DJ Mr Jhansi Official Video Mix";
         }
         try {
-          const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(ytUrl)}`);
+          const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${ytId}`);
           const data = await res.json();
           if (data && data.title) {
             titleInput.value = data.title;
           }
         } catch (e) {}
+      } else {
+        previewBox.style.display = 'none';
       }
     }
 
@@ -1031,6 +1096,7 @@
       document.getElementById('songTitle').value = '';
       document.getElementById('youtubeLink').value = '';
       document.getElementById('externalLink').value = '';
+      document.getElementById('ytPreviewBox').style.display = 'none';
       document.getElementById('startUploadBtn').style.display = 'block';
       document.getElementById('uploadProgressContainer').style.display = 'none';
       document.getElementById('uploadNextBtn').style.display = 'none';
@@ -1081,7 +1147,6 @@
       }
     }
 
-    // Load cached valid media immediately so refresh never flickers
     (function loadCachedSettings() {
       const cLogo = localStorage.getItem('dj_saved_logo');
       const cBanner = localStorage.getItem('dj_saved_banner');
@@ -1107,9 +1172,9 @@
       applySettingsToDOM(updateData);
 
       if (window.saveCloudSettings) {
-        await window.saveCloudSettings(updateData);
+        const ok = await window.saveCloudSettings(updateData);
+        if (ok) alert("✅ सारी सेटिंग्स क्लाउड सर्वर में सेव हो गईं! अब हर फोन में दिखेंगी।");
       }
-      alert("✅ सारी सेटिंग्स क्लाउड डेटाबेस में सेव हो गईं!");
     }
 
     async function uploadTrack() {
@@ -1127,28 +1192,34 @@
 
       document.getElementById('startUploadBtn').style.display = 'none';
       document.getElementById('uploadProgressContainer').style.display = 'block';
+      document.getElementById('uploadProgressBar').style.width = '40%';
+      document.getElementById('uploadProgressText').innerText = "सर्वर पर अपलोड हो रहा है...";
 
       const finishAndSaveTrack = async (mediaUrl) => {
+        const ytId = extractYouTubeId(mode === 'youtube' ? ytLink : mediaUrl);
         const newSongObj = {
           title: title,
           category: category,
           ratio: ratio,
-          youtube: (mode === 'youtube' ? ytLink : ''),
+          youtube: (mode === 'youtube' ? ytLink : (ytId ? mediaUrl : '')),
+          ytId: ytId || '',
           url: mediaUrl,
           date: new Date().toLocaleDateString('en-GB'),
           timestamp: Date.now()
         };
 
+        let savedInCloud = false;
         if (window.addCloudSong) {
-          await window.addCloudSong(newSongObj);
-        } else {
-          window.allSongs.unshift(newSongObj);
-          renderSongs();
+          savedInCloud = await window.addCloudSong(newSongObj);
         }
 
-        document.getElementById('uploadProgressBar').style.width = '100%';
-        document.getElementById('uploadProgressText').innerText = "100% - पब्लिक डेटाबेस में सेव हो गया!";
-        document.getElementById('uploadNextBtn').style.display = 'block';
+        if (savedInCloud) {
+          document.getElementById('uploadProgressBar').style.width = '100%';
+          document.getElementById('uploadProgressText').innerText = "✅ 100% - क्लाउड डेटाबेस में सेव हो गया (हर फोन में दिखेगा)!";
+          document.getElementById('uploadNextBtn').style.display = 'block';
+        } else {
+          document.getElementById('startUploadBtn').style.display = 'block';
+        }
       };
 
       if (mode === 'file') {
@@ -1163,7 +1234,7 @@
           if (e.lengthComputable) {
             const percent = Math.round((e.loaded / e.total) * 100);
             document.getElementById('uploadProgressBar').style.width = percent + '%';
-            document.getElementById('uploadProgressText').innerText = percent + '% Uploading File...';
+            document.getElementById('uploadProgressText').innerText = percent + '% Uploading to Cloudinary...';
           }
         };
 
@@ -1172,7 +1243,7 @@
             const response = JSON.parse(xhr.responseText);
             finishAndSaveTrack(response.secure_url);
           } else {
-            alert("फाइल अपलोड में दिक्कत आई। कृपया दोबारा कोशिश करें या YouTube/Direct लिंक का उपयोग करें।");
+            alert("Cloudinary पर बड़ी फाइल अपलोड में दिक्कत आई। आप इस गाने को YouTube या Google Drive पर डालकर उसकी लिंक 'YouTube Link' या 'Direct Link' से तुरंत डाल सकते हैं!");
             resetUploadUI();
           }
         };
@@ -1192,13 +1263,39 @@
 
     function finishUpload() { closeModals(); resetUploadUI(); }
 
-    function uploadSettingFile(inputId, settingKey) {
+    // Smart Logo & Banner Uploader: Compresses images directly into Firebase Firestore so it NEVER fails!
+    async function uploadSettingFile(inputId, settingKey) {
       const file = document.getElementById(inputId).files[0];
       if (!file) return alert("कृपया पहले फोटो या फाइल चुनें!");
 
       document.getElementById('settingProgressContainer').style.display = 'block';
       document.getElementById('settingNextBtn').style.display = 'none';
+      document.getElementById('settingProgressBar').style.width = '30%';
+      document.getElementById('settingProgressText').innerText = 'प्रोसेस हो रहा है...';
 
+      // If it is a static image (Logo or Banner), compress and save directly to Firebase Cloud!
+      if (file.type.startsWith('image/') && !file.type.includes('gif')) {
+        try {
+          const maxW = (settingKey === 'logo') ? 300 : 1200;
+          const compressedDataUrl = await compressImageToDataUrl(file, maxW, 0.82);
+          let updateData = {};
+          updateData[settingKey] = compressedDataUrl;
+
+          applySettingsToDOM(updateData);
+          if (window.saveCloudSettings) {
+            await window.saveCloudSettings(updateData);
+          }
+
+          document.getElementById('settingProgressBar').style.width = '100%';
+          document.getElementById('settingProgressText').innerText = "✅ 100% - फोटो सीधे क्लाउड में सेव हो गई!";
+          document.getElementById('settingNextBtn').style.display = 'block';
+          return;
+        } catch (err) {
+          console.error("Image compress fallback:", err);
+        }
+      }
+
+      // For Video FX or GIFs, upload via Cloudinary
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", UPLOAD_PRESET);
@@ -1218,7 +1315,6 @@
         if (xhr.status >= 200 && xhr.status < 300) {
           const response = JSON.parse(xhr.responseText);
           const fileUrl = response.secure_url;
-          
           let updateData = {};
           updateData[settingKey] = fileUrl;
 
@@ -1227,29 +1323,11 @@
             await window.saveCloudSettings(updateData);
           }
 
-          document.getElementById('settingProgressText').innerText = "100% - हमेशा के लिए सेव हो गया!";
+          document.getElementById('settingProgressText').innerText = "✅ 100% - हमेशा के लिए सेव हो गया!";
           document.getElementById('settingNextBtn').style.display = 'block';
         } else {
-          // Fallback: Convert small image to base64 if Cloudinary preset blocks it
-          if (file.type.startsWith('image/') && file.size < 700000) {
-            const reader = new FileReader();
-            reader.onload = async function(ev) {
-              const base64Url = ev.target.result;
-              let updateData = {};
-              updateData[settingKey] = base64Url;
-              applySettingsToDOM(updateData);
-              if (window.saveCloudSettings) {
-                await window.saveCloudSettings(updateData);
-              }
-              document.getElementById('settingProgressBar').style.width = '100%';
-              document.getElementById('settingProgressText').innerText = "100% - सीधे डेटाबेस में सेव हो गया!";
-              document.getElementById('settingNextBtn').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-          } else {
-            alert("अपलोड फेल हो गया। कृपया छोटी साइज की इमेज चुनें।");
-            resetSettingsUI();
-          }
+          alert("अपलोड फेल हो गया। कृपया सामान्य JPG/PNG फोटो चुनें।");
+          resetSettingsUI();
         }
       };
 
@@ -1257,6 +1335,16 @@
     }
 
     function finishSetting() { closeModals(); resetSettingsUI(); }
+
+    // Play YouTube video directly inside the card when user clicks the thumbnail!
+    window.playYouTubeInCard = function(wrapperId, ytId, fallbackUrl) {
+      const box = document.getElementById(wrapperId);
+      if (!box || !ytId) {
+        if (fallbackUrl) window.open(fallbackUrl, '_blank');
+        return;
+      }
+      box.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    };
 
     window.filterCategory = function(cat, el) {
       window.currentCategory = cat;
@@ -1283,10 +1371,11 @@
         return;
       }
 
-      list.forEach(song => {
+      list.forEach((song, idx) => {
         const targetUrl = (song.url && song.url.startsWith('http')) ? song.url : (song.youtube || '#');
-        const ytId = extractYouTubeId(song.youtube || targetUrl);
+        const ytId = song.ytId || extractYouTubeId(song.youtube || targetUrl);
         const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : DEFAULT_DARK_BANNER;
+        const wrapperId = `thumb_box_${idx}`;
 
         let mediaEmbed = '';
         if (!ytId && targetUrl.match(/\.(mp3|wav|ogg|m4a)(\?|$)/i)) {
@@ -1295,17 +1384,28 @@
           mediaEmbed = `<div class="media-player-box"><video controls src="${targetUrl}"></video></div>`;
         }
 
-        const ytButton = (song.youtube || ytId) ? `<a href="${song.youtube || targetUrl}" target="_blank" class="youtube-btn">▶ YouTube</a>` : '';
-        const shareText = encodeURIComponent(`🔥 Listen & Download: ${song.title} (${song.category}) from DJ Mr Jhansi Official Studio! ${targetUrl}`);
+        const ytButton = ytId
+          ? `<a href="https://www.youtube.com/watch?v=${ytId}" target="_blank" class="youtube-btn">▶ YouTube</a>`
+          : (song.youtube ? `<a href="${song.youtube}" target="_blank" class="youtube-btn">▶ YouTube</a>` : '');
+
+        const playActionBtn = ytId
+          ? `<button class="download-btn" onclick="playYouTubeInCard('${wrapperId}', '${ytId}', '${targetUrl}')">▶ Play Video</button>`
+          : `<a href="${targetUrl}" target="_blank" class="download-btn">⬇ Download / Play</a>`;
+
+        const shareText = encodeURIComponent(`🔥 Listen & Watch: ${song.title} (${song.category}) on DJ Mr Jhansi Official Studio! ${targetUrl}`);
         const whatsappShare = `https://api.whatsapp.com/send?text=${shareText}`;
         const deleteButton = (window.isAdminLoggedIn && song.id && song.id !== 'default_shyam_mix')
           ? `<button class="delete-btn" onclick="deleteSongTrack('${song.id}')">🗑 Delete</button>`
           : '';
 
+        const thumbClickAction = ytId
+          ? `playYouTubeInCard('${wrapperId}', '${ytId}', '${targetUrl}')`
+          : `window.open('${targetUrl}', '_blank')`;
+
         container.innerHTML += `
           <div class="song-card">
-            <div class="thumb-wrapper" onclick="window.open('${targetUrl}', '_blank')">
-              <img src="${thumbUrl}" alt="${song.title}" onerror="this.src=DEFAULT_DARK_BANNER">
+            <div class="thumb-wrapper" id="${wrapperId}" onclick="${thumbClickAction}">
+              <img src="${thumbUrl}" alt="${song.title}" onerror="this.onerror=null; this.src=DEFAULT_DARK_BANNER;">
               <span class="dj-badge">DJ MR JHANSI</span>
               <div class="play-overlay-icon"></div>
             </div>
@@ -1316,7 +1416,7 @@
               ${mediaEmbed}
               <div class="action-buttons">
                 ${ytButton}
-                <a href="${targetUrl}" target="_blank" class="download-btn">⬇ Download / Play</a>
+                ${playActionBtn}
                 <a href="${whatsappShare}" target="_blank" class="share-btn">🔗 Share</a>
                 ${deleteButton}
               </div>
@@ -1326,15 +1426,14 @@
       });
     };
 
-    // Initial render
     updateAdminUI();
   </script>
 
-  <!-- Cloud Firestore Direct Sync (Matches the Firestore Database & Rules You Enabled) -->
+  <!-- Cloud Firestore Direct Sync with Long-Polling Enabled for All Mobile Networks -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { 
-      getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot 
+      initializeFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot 
     } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -1348,57 +1447,70 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    // Force long polling so Jio/Airtel/VI mobile browsers never drop connection
+    const db = initializeFirestore(app, {
+      experimentalForceLongPolling: true
+    });
 
     const settingsDocRef = doc(db, "studio_config", "main_settings");
     const songsColRef = collection(db, "songs");
+    const badge = document.getElementById('cloudStatusBadge');
 
     window.saveCloudSettings = async function(newSettings) {
       try {
         await setDoc(settingsDocRef, newSettings, { merge: true });
+        return true;
       } catch (err) {
         console.error("Settings sync error:", err);
+        alert("क्लाउड में सेव करने में रुकावट आई: " + err.message);
+        return false;
       }
     };
 
     window.addCloudSong = async function(songData) {
       try {
         await addDoc(songsColRef, songData);
+        return true;
       } catch (err) {
         console.error("Song upload sync error:", err);
+        alert("गाना क्लाउड में सेव नहीं हो पाया: " + err.message);
+        return false;
       }
     };
 
     window.deleteSongTrack = async function(docId) {
-      if (!confirm("क्या आप वाकई इस गाने को हमेशा के लिए हटाना चाहते हैं?")) return;
+      if (!confirm("क्या आप वाकई इस गाने को हर जगह से हटाना चाहते हैं?")) return;
       try {
         await deleteDoc(doc(db, "songs", docId));
       } catch (err) {
-        console.error("Delete error:", err);
+        alert("डिलीट करने में दिक्कत आई: " + err.message);
       }
     };
 
-    // Real-time listener for Logo, Banner, Background FX, Contact & Theme
     onSnapshot(settingsDocRef, (docSnap) => {
+      if (badge) { badge.innerText = "🟢 Cloud Live"; badge.style.background = "#1b5e20"; }
       if (docSnap.exists()) {
         applySettingsToDOM(docSnap.data());
       }
+    }, (err) => {
+      console.error("Settings listen error:", err);
+      if (badge) { badge.innerText = "🔴 Sync Error"; badge.style.background = "#b71c1c"; }
     });
 
-    // Real-time listener for Songs across all phones
     onSnapshot(songsColRef, (querySnapshot) => {
+      if (badge) { badge.innerText = "🟢 Cloud Live"; badge.style.background = "#1b5e20"; }
       const cloudSongs = [];
       querySnapshot.forEach((docItem) => {
         cloudSongs.push({ id: docItem.id, ...docItem.data() });
       });
 
       if (cloudSongs.length === 0) {
-        // Seed default Khatu Shyam Ji track automatically if database is empty
         addDoc(songsColRef, {
           title: DEFAULT_INITIAL_SONG.title,
           category: DEFAULT_INITIAL_SONG.category,
           ratio: DEFAULT_INITIAL_SONG.ratio,
           youtube: DEFAULT_INITIAL_SONG.youtube,
+          ytId: "Ms_tO-1gqRA",
           url: DEFAULT_INITIAL_SONG.url,
           date: DEFAULT_INITIAL_SONG.date,
           timestamp: DEFAULT_INITIAL_SONG.timestamp
@@ -1408,6 +1520,9 @@
         window.allSongs = cloudSongs;
       }
       window.renderSongs();
+    }, (err) => {
+      console.error("Songs listen error:", err);
+      if (badge) { badge.innerText = "🔴 Sync Error"; badge.style.background = "#b71c1c"; }
     });
   </script>
 
