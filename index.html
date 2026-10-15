@@ -228,7 +228,7 @@
       font-weight: bold;
     }
 
-    /* Side Promo & Contact Box (Bottom Corner of Sidebar) */
+    /* Side Promo & Contact Box */
     .promo-side-box {
       margin-top: 16px;
       padding: 12px;
@@ -459,7 +459,7 @@
       cursor: pointer;
     }
 
-    /* Modals with Top ✖ and Bottom ✖ */
+    /* Modals */
     .modal {
       display: none;
       position: fixed;
@@ -662,7 +662,7 @@
         <li onclick="filterCategory('Lord Ganesha Songs', this)">🟡 गणेश भगवान सॉन्ग्स</li>
       </ul>
 
-      <!-- Side Bottom Promo & Contact Box -->
+      <!-- Side Promo & Contact Box -->
       <div class="promo-side-box">
         <h4 id="promoHeading">🎧 DJ सॉन्ग या App बनवाएं!</h4>
         <p id="promoSubtext">अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या मोबाइल ऐप बनवाने के लिए संपर्क करें!</p>
@@ -844,7 +844,6 @@
     </div>
   </div>
 
-  <!-- Default Embedded Dark Graphics (Guarantees Zero White Screen) -->
   <script>
     const DEFAULT_DARK_LOGO = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
@@ -925,7 +924,6 @@
     window.adminPinCode = localStorage.getItem('dj_admin_pin') || '7860';
     window.isAdminLoggedIn = localStorage.getItem('dj_admin_logged_in') === 'true';
 
-    // Robust YouTube ID Extractor (Supports youtu.be, watch?v=, shorts/, live/, embed/, etc.)
     function extractYouTubeId(inputUrl) {
       if (!inputUrl || typeof inputUrl !== 'string') return null;
       const clean = inputUrl.trim();
@@ -944,7 +942,6 @@
       return null;
     }
 
-    // Compress image on phone so Logo & Banner save directly in Cloud Database (100% reliable)
     function compressImageToDataUrl(file, maxWidth, quality) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -1173,7 +1170,7 @@
 
       if (window.saveCloudSettings) {
         const ok = await window.saveCloudSettings(updateData);
-        if (ok) alert("✅ सारी सेटिंग्स क्लाउड सर्वर में सेव हो गईं! अब हर फोन में दिखेंगी।");
+        if (ok) alert("✅ सारी सेटिंग्स क्लाउड सर्वर में सेव हो गईं!");
       }
     }
 
@@ -1215,7 +1212,7 @@
 
         if (savedInCloud) {
           document.getElementById('uploadProgressBar').style.width = '100%';
-          document.getElementById('uploadProgressText').innerText = "✅ 100% - क्लाउड डेटाबेस में सेव हो गया (हर फोन में दिखेगा)!";
+          document.getElementById('uploadProgressText').innerText = "✅ 100% - क्लाउड डेटाबेस में सेव हो गया!";
           document.getElementById('uploadNextBtn').style.display = 'block';
         } else {
           document.getElementById('startUploadBtn').style.display = 'block';
@@ -1234,7 +1231,7 @@
           if (e.lengthComputable) {
             const percent = Math.round((e.loaded / e.total) * 100);
             document.getElementById('uploadProgressBar').style.width = percent + '%';
-            document.getElementById('uploadProgressText').innerText = percent + '% Uploading to Cloudinary...';
+            document.getElementById('uploadProgressText').innerText = percent + '% Uploading...';
           }
         };
 
@@ -1243,16 +1240,10 @@
             const response = JSON.parse(xhr.responseText);
             finishAndSaveTrack(response.secure_url);
           } else {
-            alert("Cloudinary पर बड़ी फाइल अपलोड में दिक्कत आई। आप इस गाने को YouTube या Google Drive पर डालकर उसकी लिंक 'YouTube Link' या 'Direct Link' से तुरंत डाल सकते हैं!");
+            alert("अपलोड में दिक्कत आई। आप YouTube लिंक का उपयोग कर सकते हैं!");
             resetUploadUI();
           }
         };
-
-        xhr.onerror = () => {
-          alert("इंटरनेट कनेक्शन एरर! फाइल अपलोड नहीं हो पाई।");
-          resetUploadUI();
-        };
-
         xhr.send(formData);
       } else if (mode === 'external') {
         await finishAndSaveTrack(extLink);
@@ -1263,7 +1254,6 @@
 
     function finishUpload() { closeModals(); resetUploadUI(); }
 
-    // Smart Logo & Banner Uploader: Compresses images directly into Firebase Firestore so it NEVER fails!
     async function uploadSettingFile(inputId, settingKey) {
       const file = document.getElementById(inputId).files[0];
       if (!file) return alert("कृपया पहले फोटो या फाइल चुनें!");
@@ -1273,7 +1263,6 @@
       document.getElementById('settingProgressBar').style.width = '30%';
       document.getElementById('settingProgressText').innerText = 'प्रोसेस हो रहा है...';
 
-      // If it is a static image (Logo or Banner), compress and save directly to Firebase Cloud!
       if (file.type.startsWith('image/') && !file.type.includes('gif')) {
         try {
           const maxW = (settingKey === 'logo') ? 300 : 1200;
@@ -1287,15 +1276,12 @@
           }
 
           document.getElementById('settingProgressBar').style.width = '100%';
-          document.getElementById('settingProgressText').innerText = "✅ 100% - फोटो सीधे क्लाउड में सेव हो गई!";
+          document.getElementById('settingProgressText').innerText = "✅ 100% - फोटो क्लाउड में सेव हो गई!";
           document.getElementById('settingNextBtn').style.display = 'block';
           return;
-        } catch (err) {
-          console.error("Image compress fallback:", err);
-        }
+        } catch (err) {}
       }
 
-      // For Video FX or GIFs, upload via Cloudinary
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", UPLOAD_PRESET);
@@ -1303,40 +1289,29 @@
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
 
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const percent = Math.round((e.loaded / e.total) * 100);
-          document.getElementById('settingProgressBar').style.width = percent + '%';
-          document.getElementById('settingProgressText').innerText = percent + '% Uploading...';
-        }
-      };
-
       xhr.onload = async () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           const response = JSON.parse(xhr.responseText);
-          const fileUrl = response.secure_url;
           let updateData = {};
-          updateData[settingKey] = fileUrl;
+          updateData[settingKey] = response.secure_url;
 
           applySettingsToDOM(updateData);
           if (window.saveCloudSettings) {
             await window.saveCloudSettings(updateData);
           }
 
-          document.getElementById('settingProgressText').innerText = "✅ 100% - हमेशा के लिए सेव हो गया!";
+          document.getElementById('settingProgressText').innerText = "✅ 100% - सेव हो गया!";
           document.getElementById('settingNextBtn').style.display = 'block';
         } else {
-          alert("अपलोड फेल हो गया। कृपया सामान्य JPG/PNG फोटो चुनें।");
+          alert("अपलोड फेल हो गया।");
           resetSettingsUI();
         }
       };
-
       xhr.send(formData);
     }
 
     function finishSetting() { closeModals(); resetSettingsUI(); }
 
-    // Play YouTube video directly inside the card when user clicks the thumbnail!
     window.playYouTubeInCard = function(wrapperId, ytId, fallbackUrl) {
       const box = document.getElementById(wrapperId);
       if (!box || !ytId) {
@@ -1367,7 +1342,7 @@
       }
 
       if (list.length === 0) {
-        container.innerHTML = '<p style="color:#aaa;">इस प्लेलिस्ट में अभी कोई गाना नहीं है। (+ Upload Song से गाना जोड़ें)</p>';
+        container.innerHTML = '<p style="color:#aaa;">इस प्लेलिस्ट में अभी कोई गाना नहीं है।</p>';
         return;
       }
 
@@ -1429,7 +1404,7 @@
     updateAdminUI();
   </script>
 
-  <!-- Cloud Firestore Direct Sync with Long-Polling Enabled for All Mobile Networks -->
+  <!-- Cloud Firestore Direct Sync -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { 
@@ -1447,10 +1422,7 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    // Force long polling so Jio/Airtel/VI mobile browsers never drop connection
-    const db = initializeFirestore(app, {
-      experimentalForceLongPolling: true
-    });
+    const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
     const settingsDocRef = doc(db, "studio_config", "main_settings");
     const songsColRef = collection(db, "songs");
@@ -1461,8 +1433,7 @@
         await setDoc(settingsDocRef, newSettings, { merge: true });
         return true;
       } catch (err) {
-        console.error("Settings sync error:", err);
-        alert("क्लाउड में सेव करने में रुकावट आई: " + err.message);
+        alert("क्लाउड सेव एरर: " + err.message);
         return false;
       }
     };
@@ -1472,18 +1443,17 @@
         await addDoc(songsColRef, songData);
         return true;
       } catch (err) {
-        console.error("Song upload sync error:", err);
-        alert("गाना क्लाउड में सेव नहीं हो पाया: " + err.message);
+        alert("गाना सेव एरर: " + err.message);
         return false;
       }
     };
 
     window.deleteSongTrack = async function(docId) {
-      if (!confirm("क्या आप वाकई इस गाने को हर जगह से हटाना चाहते हैं?")) return;
+      if (!confirm("क्या आप वाकई इस गाने को हटाना चाहते हैं?")) return;
       try {
         await deleteDoc(doc(db, "songs", docId));
       } catch (err) {
-        alert("डिलीट करने में दिक्कत आई: " + err.message);
+        alert("डिलीट एरर: " + err.message);
       }
     };
 
@@ -1492,9 +1462,6 @@
       if (docSnap.exists()) {
         applySettingsToDOM(docSnap.data());
       }
-    }, (err) => {
-      console.error("Settings listen error:", err);
-      if (badge) { badge.innerText = "🔴 Sync Error"; badge.style.background = "#b71c1c"; }
     });
 
     onSnapshot(songsColRef, (querySnapshot) => {
@@ -1520,9 +1487,6 @@
         window.allSongs = cloudSongs;
       }
       window.renderSongs();
-    }, (err) => {
-      console.error("Songs listen error:", err);
-      if (badge) { badge.innerText = "🔴 Sync Error"; badge.style.background = "#b71c1c"; }
     });
   </script>
 
