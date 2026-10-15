@@ -599,6 +599,19 @@
       z-index: 2000;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
+    
+    .db-warning {
+      background: rgba(255, 0, 0, 0.2);
+      border: 1px solid #ff3366;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .db-warning h3 {
+      color: #ff3366;
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -676,6 +689,7 @@
     <marquee id="siteMarquee">🔥 WELCOME TO DJ MR JHANSI OFFICIAL STUDIO 🔥 BHOJPURI, BOLLYWOOD, HARYANVI & BHAJAN REMIXES 🔥 HIGH QUALITY DOWNLOADS 🔥</marquee>
   </div>
 
+  <!-- LOGIN MODAL -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -711,6 +725,7 @@
     </div>
   </div>
 
+  <!-- UPLOAD MODAL -->
   <div id="uploadModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -788,6 +803,7 @@
     </div>
   </div>
 
+  <!-- SETTINGS MODAL -->
   <div id="settingsModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -882,6 +898,23 @@
       pin: '7860',
       phone: ''
     };
+
+    function loadLocalSettings() {
+      const saved = localStorage.getItem('djSettings');
+      if (saved) {
+        try { applySettingsObject(JSON.parse(saved)); } catch(e){}
+      }
+    }
+    
+    function loadLocalSongs() {
+      const saved = localStorage.getItem('djSongs');
+      if (saved) {
+        try { 
+          window.allSongs = JSON.parse(saved); 
+          filterCategory(window.currentCategory);
+        } catch(e){}
+      }
+    }
 
     function extractYouTubeId(url) {
       if (!url) return null;
@@ -1141,9 +1174,9 @@
         if(window.cloudSaveSong) {
           window.cloudSaveSong(newSong);
         } else {
-          // Fallback if cloud fails locally
           newSong.id = 'temp_' + Date.now();
           window.allSongs.push(newSong);
+          localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
           filterCategory('All');
         }
 
@@ -1196,10 +1229,11 @@
     }
 
     function deleteSong(songId) {
-      if(window.cloudDeleteSong) {
+      if(window.cloudDeleteSong && !songId.startsWith('temp_')) {
         window.cloudDeleteSong(songId);
       } else {
         window.allSongs = window.allSongs.filter(s => s.id !== songId);
+        localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
         filterCategory(window.currentCategory);
       }
       showMessage("🗑️ Track removed!");
@@ -1281,7 +1315,7 @@
       filtered.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
       if(filtered.length === 0) {
-        container.innerHTML = '<p>No tracks found in this category. Upload some music!</p>';
+        container.innerHTML = '<p style="color:#aaa;">No tracks found in this category. Upload some music!</p>';
         return;
       }
 
@@ -1322,7 +1356,7 @@
         let ytButton = (song.youtube || ytId) ? `<a href="${targetUrl}" target="_blank" class="youtube-btn">▶ YouTube</a>` : '';
         let shareText = encodeURIComponent(`🔥 Listen & Download: ${song.title} (${song.category}) from DJ Mr Jhansi Official Studio! Check here: ${window.location.href}`);
         let whatsappShare = `https://api.whatsapp.com/send?text=${shareText}`;
-        let deleteBtn = window.isAdmin && song.id ? `<button class="delete-btn" onclick="deleteSong('${song.id}')">🗑️</button>` : '';
+        let deleteBtn = window.isAdmin ? `<button class="delete-btn" onclick="deleteSong('${song.id}')">🗑️</button>` : '';
 
         container.innerHTML += `
           <div class="song-card">
@@ -1348,12 +1382,14 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Fallback ID if not in immersive environment
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'dj-mr-jhansi-studio';
-    const fbConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+    const appId = 'dj-mr-jhansi-studio';
+    
+    // ⚠️⚠️⚠️ FIREBASE CONFIG ⚠️⚠️⚠️
+    // यह आपका असली कोड है जो अब डायरेक्ट चालू हो गया है!
+    const fbConfig = {
       apiKey: "AIzaSyDripMMFxcqxeG3j5gF9QL1adbO8_5oicw",
       authDomain: "dj-mr-jhansi.firebaseapp.com",
       projectId: "dj-mr-jhansi",
@@ -1367,29 +1403,25 @@
     const auth = getAuth(app);
     let isConnected = false;
 
-    // Strict Paths for Global Public Data Sync
     const SONGS_PATH = collection(db, 'artifacts', appId, 'public', 'data', 'songs');
     const SETTINGS_DOC = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'global_state');
 
     async function connectToCloud() {
       try {
-        if (typeof __initial_auth_token !== 'undefined') {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
+        await signInAnonymously(auth);
         
         if (!auth.currentUser) return;
         isConnected = true;
         
-        // Listen to Global Settings (Always in sync)
         onSnapshot(SETTINGS_DOC, (docSnap) => {
           if (docSnap.exists()) {
             applySettingsObject(docSnap.data());
+            localStorage.setItem('djSettings', JSON.stringify(docSnap.data()));
           }
-        }, (err) => { console.warn("Settings sync issue:", err); });
+        }, (err) => { 
+           console.error("Settings Load Error", err);
+        });
 
-        // Listen to All Songs (Real-time update for everyone)
         onSnapshot(SONGS_PATH, (snapshot) => {
           const fetchedSongs = [];
           snapshot.forEach(doc => {
@@ -1398,42 +1430,41 @@
             fetchedSongs.push(data);
           });
           window.allSongs = fetchedSongs;
+          localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
           filterCategory(window.currentCategory);
         }, (err) => { 
-          console.warn("Songs sync issue:", err); 
-          document.getElementById('songsContainer').innerHTML = "<p>Network issue loading tracks. Please refresh.</p>";
+           console.error("Songs Load Error", err);
+           document.getElementById('songsContainer').innerHTML = "<p style='color:red;'>डेटाबेस से गाने लोड नहीं हो पा रहे हैं। कृपया चेक करें कि आपके Firebase Firestore के 'Rules' Test Mode (allow read, write: if true;) में हैं या नहीं।</p>";
         });
 
       } catch(err) {
-        console.warn("Cloud Auth Failed. Showing default offline data.", err);
-        document.getElementById('songsContainer').innerHTML = "<p>Offline Mode: Songs failed to load from Cloud.</p>";
+        console.warn("Cloud Auth Failed.", err);
+        document.getElementById('songsContainer').innerHTML = "<p style='color:red;'>डेटाबेस कनेक्शन फेल हो गया।</p>";
       }
     }
 
-    // Expose functions to global scope for the admin UI
     window.cloudSaveSetting = async (settingData) => {
+      const currentSettings = JSON.parse(localStorage.getItem('djSettings') || '{}');
+      const updated = {...currentSettings, ...settingData};
+      localStorage.setItem('djSettings', JSON.stringify(updated));
+      
       if(!isConnected) return;
-      try {
-        await setDoc(SETTINGS_DOC, settingData, { merge: true });
-      } catch (e) { console.error("Failed to save setting to cloud:", e); }
+      try { await setDoc(SETTINGS_DOC, settingData, { merge: true }); } catch (e) {}
     };
 
     window.cloudSaveSong = async (songData) => {
       if(!isConnected) return;
-      try {
-        await addDoc(SONGS_PATH, songData);
-      } catch (e) { console.error("Failed to save song to cloud:", e); }
+      try { await addDoc(SONGS_PATH, songData); } catch (e) {}
     };
 
     window.cloudDeleteSong = async (songId) => {
       if(!isConnected || !songId) return;
-      try {
-        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'songs', songId));
-      } catch (e) { console.error("Failed to delete song from cloud:", e); }
+      try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'songs', songId)); } catch (e) {}
     };
 
-    // Initialize the cloud connection immediately
+    // मैंने वो ब्लॉक करने वाली लाइन हटा दी है। अब यह सीधा आपके डेटाबेस से जुड़ेगा!
     connectToCloud();
+
   </script>
 </body>
 </html>
