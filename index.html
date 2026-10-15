@@ -15,7 +15,7 @@
 ​body {
 margin: 0;
 padding: 0;
-background-color: transparent !important;
+background-color: var(--bg-color);
 color: var(--text-color);
 font-family: var(--font-family);
 }
@@ -275,7 +275,7 @@ color: white;
 }
 .btn-next {
 display: none;
-background-color: #4CAF50;
+background-color: #e91e63;
 width: 100%;
 margin-top: 10px;
 padding: 10px;
@@ -427,8 +427,7 @@ text-shadow: 1px 1px 2px black;
 <div class="progress-bar" id="uploadProgressBar"></div>
 <div class="progress-text" id="uploadProgressText">0%</div>
 </div>
-​<button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">✅ Upload Done! Close Panel ❌</button>
-<button class="btn" id="uploadCloseBtn" style="display:block; width:100%; margin-top:8px; background:#e91e63;" onclick="closeModals()">❌ Close Panel</button>
+​<button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">❌ Close Panel</button>
 <button class="btn" id="uploadCancelBtn" style="width:100%; margin-top:8px; background:#444;" onclick="closeModals()">Cancel</button>
 </div>
 </div>
@@ -469,7 +468,7 @@ text-shadow: 1px 1px 2px black;
 <div class="progress-bar" id="settingProgressBar"></div>
 <div class="progress-text" id="settingProgressText">0%</div>
 </div>
-​<button class="btn-next" id="settingNextBtn" onclick="finishSetting()">✅ Media Saved! Click Next 👉</button>
+​<button class="btn-next" id="settingNextBtn" onclick="finishSetting()">❌ Close Settings</button>
 <button class="btn" style="width:100%; margin-top:10px; background:#444;" onclick="closeModals()">❌ Close Settings</button>
 </div>
 </div>
@@ -541,13 +540,12 @@ document.getElementById('youtubeLink').value = '';
 document.getElementById('startUploadBtn').style.display = 'block';
 document.getElementById('uploadCancelBtn').style.display = 'block';
 document.getElementById('uploadProgressContainer').style.display = 'none';
-document.getElementById('uploadNextBtn').style.display = 'none';
-document.getElementById('uploadCloseBtn').style.display = 'block';
+document.getElementById('uploadNextBtn').style.display = 'block';
 document.getElementById('uploadProgressBar').style.width = '0%';
 }
 ​function resetSettingsUI() {
 document.getElementById('settingProgressContainer').style.display = 'none';
-document.getElementById('settingNextBtn').style.display = 'none';
+document.getElementById('settingNextBtn').style.display = 'block';
 document.getElementById('settingProgressBar').style.width = '0%';
 }
 ​function saveTextAndColorSettings() {
@@ -599,7 +597,6 @@ date: new Date().toLocaleDateString()
 }).then(() => {
 document.getElementById('uploadProgressText').innerText = "100% - Saved to Database!";
 document.getElementById('uploadNextBtn').style.display = 'block';
-document.getElementById('uploadCloseBtn').style.display = 'block';
 });
 }
 };
@@ -633,12 +630,11 @@ document.getElementById('uploadProgressText').innerText = '100% - Saved YouTube 
 saveToDatabase(ytLink);
 }
 }
-​function finishUpload() { closeModals(); resetUploadUI(); }
+​function finishUpload() { closeModals(); resetUploadUI(); filterCategory(window.currentCategory); }
 ​function uploadSettingFile(inputId, publicId) {
 const file = document.getElementById(inputId).files[0];
 if(!file) return alert("Please select a file first!");
 ​document.getElementById('settingProgressContainer').style.display = 'block';
-document.getElementById('settingNextBtn').style.display = 'none';
 ​const formData = new FormData();
 formData.append("file", file);
 formData.append("upload_preset", UPLOAD_PRESET);
@@ -677,13 +673,18 @@ xhr.send(formData);
 ​function finishSetting() { closeModals(); resetSettingsUI(); }
 ​window.filterCategory = function(cat, element) {
 window.currentCategory = cat;
+if(element) {
 document.querySelectorAll('.playlist-menu li').forEach(li => li.classList.remove('active'));
-if(element) element.classList.add('active');
+element.classList.add('active');
+}
 ​const container = document.getElementById('songsContainer');
 container.innerHTML = '';
 ​let filtered = window.allSongs;
 if(cat !== 'All') {
-filtered = window.allSongs.filter(s => s.category && s.category.trim().toLowerCase() === cat.trim().toLowerCase());
+filtered = window.allSongs.filter(s => {
+if (!s.category) return false;
+return s.category.trim().toLowerCase() === cat.trim().toLowerCase();
+});
 }
 ​if(filtered.length === 0) {
 container.innerHTML = '<p>No tracks found in this category. Upload some music!</p>';
