@@ -1,1335 +1,1415 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Mr Jhansi Official Studio</title>
-<style>
-:root {
---primary-color: #ff3366;
---bg-color: #0b0b0f;
---panel-bg: #16161f;
---text-color: #ffffff;
---font-family: 'Arial', sans-serif;
-}
-​html, body {
-margin: 0;
-padding: 0;
-background-color: var(--bg-color);
-color: var(--text-color);
-font-family: var(--font-family);
-overflow-x: hidden;
-}
-​#bg-overlay {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(11, 11, 15, 0.85);
-z-index: -1;
-pointer-events: none;
-}
-​#bgVideo {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover;
-z-index: -2;
-display: none;
-pointer-events: none;
-}
-​#bgImage {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background-size: cover;
-background-position: center;
-z-index: -3;
-background-color: #0b0b0f;
-pointer-events: none;
-}
-​header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px 16px;
-background-color: rgba(0, 0, 0, 0.95);
-border-bottom: 2px solid var(--primary-color);
-position: sticky;
-top: 0;
-z-index: 100;
-box-shadow: 0 2px 12px rgba(255, 51, 102, 0.3);
-}
-​.brand {
-display: flex;
-align-items: center;
-gap: 10px;
-font-size: 1.15rem;
-font-weight: bold;
-color: #ffffff;
-}
-​.brand img {
-width: 38px;
-height: 38px;
-border-radius: 50%;
-border: 2px solid var(--primary-color);
-object-fit: cover;
-background-color: #12081c;
-}
-​.admin-controls {
-display: flex;
-gap: 6px;
-align-items: center;
-}
-​.btn {
-padding: 7px 12px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-font-weight: bold;
-color: white;
-font-size: 0.8rem;
-transition: 0.2s;
-}
-​.btn-upload { background-color: var(--primary-color); }
-.btn-settings { background-color: #9c27b0; }
-.btn-login { background-color: #2196f3; }
-.btn-logout { background-color: #f44336; }
-​.banner-container {
-width: 100%;
-height: 210px;
-overflow: hidden;
-background-color: #08040c;
-position: relative;
-border-bottom: 1px solid rgba(255, 51, 102, 0.35);
-}
-​.banner-container img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-​.studio-title {
-text-align: center;
-padding: 18px 12px 10px;
-background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
-}
-​.studio-title h1 {
-margin: 0;
-color: var(--primary-color);
-font-size: 1.65rem;
-text-transform: uppercase;
-letter-spacing: 1.5px;
-text-shadow: 0 2px 10px rgba(255, 51, 102, 0.5);
-}
-​.studio-title p {
-margin: 5px 0 0;
-color: #aaa;
-font-size: 0.8rem;
-}
-​.main-layout {
-display: flex;
-flex-wrap: wrap;
-padding: 14px;
-gap: 18px;
-max-width: 1400px;
-margin: 0 auto;
-}
-​.sidebar {
-flex: 1;
-min-width: 240px;
-max-width: 300px;
-background-color: rgba(22, 22, 31, 0.96);
-padding: 15px;
-border-radius: 10px;
-height: fit-content;
-border: 1px solid rgba(255,255,255,0.08);
-display: flex;
-flex-direction: column;
-}
-​.sidebar h3 {
-margin: 0 0 10px 0;
-font-size: 1.05rem;
-color: #fff;
-}
-​.playlist-section-title {
-font-size: 0.72rem;
-color: var(--primary-color);
-text-transform: uppercase;
-margin: 12px 0 6px 4px;
-letter-spacing: 1px;
-font-weight: bold;
-}
-​.playlist-menu {
-list-style: none;
-padding: 0;
-margin: 0;
-}
-​.playlist-menu li {
-padding: 9px 12px;
-margin-bottom: 5px;
-background-color: rgba(255,255,255,0.04);
-border-radius: 6px;
-cursor: pointer;
-transition: 0.2s;
-border-left: 3px solid transparent;
-font-size: 0.85rem;
-color: #ddd;
-}
-​.playlist-menu li:hover, .playlist-menu li.active {
-background-color: rgba(255, 255, 255, 0.14);
-border-left: 3px solid var(--primary-color);
-color: #fff;
-font-weight: bold;
-}
-​/* Side/Bottom Promo & Contact Box */
-.promo-banner {
-margin-top: 16px;
-padding: 12px;
-background: linear-gradient(135deg, rgba(20, 20, 30, 0.98), rgba(45, 10, 25, 0.95));
-border: 1px solid var(--primary-color);
-border-radius: 8px;
-display: flex;
-flex-direction: column;
-gap: 8px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-}
-​.promo-text-box h4 {
-margin: 0 0 4px 0;
-color: var(--primary-color);
-font-size: 0.86rem;
-}
-​.promo-text-box p {
-margin: 0;
-color: #ccc;
-font-size: 0.74rem;
-line-height: 1.35;
-}
-​.promo-actions {
-display: flex;
-gap: 6px;
-align-items: center;
-}
-​.btn-call, .btn-wa-contact {
-flex: 1;
-text-align: center;
-justify-content: center;
-color: white;
-text-decoration: none;
-padding: 7px 8px;
-border-radius: 5px;
-font-weight: bold;
-font-size: 0.74rem;
-display: inline-flex;
-align-items: center;
-gap: 4px;
-}
-​.btn-call { background-color: #2196f3; }
-.btn-wa-contact { background-color: #25D366; }
-​.content-area {
-flex: 3;
-min-width: 280px;
-padding-bottom: 60px;
-}
-​.content-area h2 {
-margin: 0 0 14px 0;
-font-size: 1.18rem;
-color: #fff;
-}
-​.song-list {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-gap: 18px;
-}
-​.song-card {
-background-color: rgba(22, 22, 31, 0.96);
-border-radius: 10px;
-overflow: hidden;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-bottom: 3px solid var(--primary-color);
-box-shadow: 0 6px 15px rgba(0,0,0,0.7);
-position: relative;
-}
-​.media-preview {
-width: 100%;
-aspect-ratio: 16 / 9;
-background-color: #000;
-position: relative;
-overflow: hidden;
-cursor: pointer;
-}
-​.media-preview img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-​.media-preview iframe,
-.media-preview video {
-width: 100%;
-height: 100%;
-border: none;
-display: block;
-background: #000;
-}
-​.play-overlay {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 54px;
-height: 38px;
-background-color: rgba(255, 0, 0, 0.92);
-border-radius: 10px;
-display: flex;
-align-items: center;
-justify-content: center;
-box-shadow: 0 0 16px rgba(255, 0, 0, 0.8);
-pointer-events: none;
-}
-​.play-overlay::after {
-content: '';
-border-style: solid;
-border-width: 8px 0 8px 14px;
-border-color: transparent transparent transparent #ffffff;
-margin-left: 3px;
-}
-​.watermark-badge {
-position: absolute;
-top: 8px;
-right: 8px;
-background: rgba(0, 0, 0, 0.85);
-color: #fff;
-padding: 3px 7px;
-border-radius: 4px;
-font-size: 0.6rem;
-font-weight: bold;
-letter-spacing: 0.8px;
-border: 1px solid var(--primary-color);
-pointer-events: none;
-}
-​.song-body {
-padding: 12px;
-display: flex;
-flex-direction: column;
-gap: 8px;
-flex: 1;
-}
-​.song-info h3 {
-margin: 0 0 5px 0;
-color: var(--primary-color);
-font-size: 0.98rem;
-line-height: 1.3;
-}
-​.song-info p {
-margin: 0 0 5px 0;
-color: #bbb;
-font-size: 0.75rem;
-}
-​.song-link-preview {
-display: block;
-font-size: 0.7rem;
-color: #64b5f6;
-text-decoration: underline;
-word-break: break-all;
-margin-bottom: 4px;
-}
-​.action-buttons {
-display: flex;
-gap: 6px;
-align-items: center;
-flex-wrap: wrap;
-margin-top: auto;
-}
-​.youtube-btn {
-background-color: #FF0000;
-padding: 6px 10px;
-text-decoration: none;
-color: white;
-border-radius: 5px;
-font-weight: bold;
-font-size: 0.75rem;
-display: inline-block;
-}
-​.download-btn {
-background-color: #4CAF50;
-padding: 6px 10px;
-text-decoration: none;
-color: white;
-border-radius: 5px;
-font-weight: bold;
-font-size: 0.75rem;
-display: inline-block;
-}
-​.share-btn {
-background-color: #25D366;
-padding: 6px 10px;
-text-decoration: none;
-color: white;
-border-radius: 5px;
-font-weight: bold;
-font-size: 0.75rem;
-display: inline-block;
-}
-​.delete-btn {
-background-color: #ff9800;
-padding: 6px 9px;
-border: none;
-color: white;
-border-radius: 5px;
-font-weight: bold;
-font-size: 0.75rem;
-cursor: pointer;
-}
-​.forgot-pin-link {
-display: block;
-text-align: right;
-color: #64b5f6;
-font-size: 0.78rem;
-margin-top: 6px;
-cursor: pointer;
-text-decoration: underline;
-}
-​.modal {
-display: none;
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background-color: rgba(0,0,0,0.9);
-justify-content: center;
-align-items: center;
-z-index: 1000;
-}
-​.modal-content {
-background-color: #1a1a24;
-padding: 18px;
-border-radius: 10px;
-width: 92%;
-max-width: 480px;
-max-height: 90vh;
-overflow-y: auto;
-border: 1px solid var(--primary-color);
-box-sizing: border-box;
-position: relative;
-}
-​.modal-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-border-bottom: 1px solid #444;
-padding-bottom: 8px;
-margin-bottom: 12px;
-}
-​.modal-header h2 {
-margin: 0;
-color: var(--primary-color);
-font-size: 1.15rem;
-}
-​.modal-close-top {
-background: #e91e63;
-color: white;
-border: none;
-border-radius: 5px;
-padding: 5px 10px;
-font-size: 0.78rem;
-font-weight: bold;
-cursor: pointer;
-}
-​.form-group {
-margin-bottom: 10px;
-background: #252532;
-padding: 9px;
-border-radius: 6px;
-}
-​.form-group label {
-display: block;
-margin-bottom: 4px;
-color: white;
-font-weight: bold;
-font-size: 0.8rem;
-}
-​.form-group input, .form-group select {
-width: 100%;
-padding: 8px;
-border-radius: 5px;
-border: 1px solid #555;
-background-color: #111;
-color: white;
-box-sizing: border-box;
-font-size: 0.85rem;
-}
-​.yt-Input-Preview {
-display: none;
-margin-top: 8px;
-border-radius: 6px;
-overflow: hidden;
-border: 1px solid var(--primary-color);
-background: #000;
-}
-​.yt-Input-Preview img {
-width: 100%;
-max-height: 150px;
-object-fit: cover;
-display: block;
-}
-​.progress-container {
-display: none;
-width: 100%;
-background-color: #333;
-border-radius: 5px;
-margin-top: 10px;
-overflow: hidden;
-padding-bottom: 4px;
-}
-​.progress-bar {
-width: 0%;
-height: 14px;
-background-color: #4CAF50;
-transition: width 0.3s;
-}
-​.progress-text {
-text-align: center;
-margin-top: 4px;
-font-size: 0.78rem;
-color: white;
-font-weight: bold;
-}
-​.btn-next {
-display: none;
-background-color: #e91e63;
-width: 100%;
-margin-top: 10px;
-padding: 10px;
-font-size: 0.9rem;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-color: white;
-font-weight: bold;
-}
-​.marquee-container {
-position: fixed;
-bottom: 0;
-width: 100%;
-background-color: var(--primary-color);
-color: white;
-padding: 7px 0;
-font-size: 0.95rem;
-font-weight: bold;
-z-index: 99;
-text-shadow: 1px 1px 2px black;
-}
-​#toastMsg {
-display: none;
-position: fixed;
-top: 68px;
-left: 50%;
-transform: translateX(-50%);
-background-color: var(--primary-color);
-color: white;
-padding: 10px 18px;
-border-radius: 6px;
-font-weight: bold;
-font-size: 0.85rem;
-z-index: 2000;
-box-shadow: 0 4px 12px rgba(0,0,0,0.8);
-text-align: center;
-}
-​@media (max-width: 768px) {
-.sidebar { max-width: 100%; }
-.banner-container { height: 170px; }
-.studio-title h1 { font-size: 1.3rem; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Mr Jhansi Official Studio</title>
+  <style>
+    :root {
+      --primary-color: #ff2a5f;
+      --bg-color: #0b0b0f;
+      --panel-bg: #15151e;
+      --card-bg: #1a1a24;
+      --text-color: #ffffff;
+      --font-family: 'Arial', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0b0b0f !important;
+      color: var(--text-color);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #bg-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(11, 11, 15, 0.82);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    #bgVideo {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      display: none;
+      pointer-events: none;
+    }
+
+    #bgImage {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: -3;
+      background-color: #0b0b0f;
+      pointer-events: none;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background-color: rgba(10, 10, 14, 0.95);
+      border-bottom: 2px solid var(--primary-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      object-fit: cover;
+      background-color: #1a1a24;
+    }
+
+    .admin-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 7px 13px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      font-size: 0.85rem;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn-upload { background-color: var(--primary-color); }
+    .btn-settings { background-color: #9c27b0; }
+    .btn-login { background-color: #2196f3; }
+    .btn-logout { background-color: #f44336; }
+
+    /* Banner */
+    .banner-container {
+      width: 100%;
+      height: 210px;
+      overflow: hidden;
+      background-color: #121218;
+      position: relative;
+      border-bottom: 1px solid #222;
+    }
+
+    .banner-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Studio Title */
+    .studio-title {
+      text-align: center;
+      padding: 18px 10px 10px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+    }
+
+    .studio-title h1 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px rgba(255, 42, 95, 0.4);
+    }
+
+    .studio-title p {
+      margin: 5px 0 0;
+      color: #aaa;
+      font-size: 0.8rem;
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 15px;
+      gap: 20px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding-bottom: 70px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+      min-width: 250px;
+      max-width: 320px;
+      background-color: rgba(21, 21, 30, 0.95);
+      padding: 15px;
+      border-radius: 10px;
+      height: fit-content;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .sidebar h3 {
+      margin: 0 0 12px 0;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .playlist-section-title {
+      font-size: 0.75rem;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      margin: 14px 0 6px 4px;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #2a2a35;
+      padding-bottom: 3px;
+      font-weight: bold;
+    }
+
+    .playlist-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .playlist-menu li {
+      padding: 9px 12px;
+      margin-bottom: 5px;
+      background-color: rgba(255,255,255,0.04);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+      border-left: 3px solid transparent;
+      font-size: 0.88rem;
+      color: #ddd;
+    }
+
+    .playlist-menu li:hover, .playlist-menu li.active {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-left: 3px solid var(--primary-color);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Side Promo & Contact Box (Bottom of Sidebar) */
+    .promo-side-box {
+      margin-top: 18px;
+      padding: 12px;
+      background: linear-gradient(145deg, #1e1324, #14141d);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      text-align: left;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    }
+
+    .promo-side-box h4 {
+      margin: 0 0 5px 0;
+      color: var(--primary-color);
+      font-size: 0.9rem;
+    }
+
+    .promo-side-box p {
+      margin: 0 0 10px 0;
+      color: #ccc;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .promo-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .promo-btns a {
+      flex: 1;
+      text-align: center;
+      padding: 7px 8px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .btn-call { background-color: #0288d1; }
+    .btn-wa { background-color: #25D366; }
+
+    /* Content Area & Cards (Matching Screenshot 1000728124.jpg) */
+    .content-area {
+      flex: 3;
+      min-width: 280px;
+    }
+
+    .content-area h2 {
+      margin: 0 0 15px 0;
+      font-size: 1.2rem;
+    }
+
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .song-card {
+      background-color: rgba(24, 24, 34, 0.96);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 3px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .thumb-wrapper {
+      position: relative;
+      width: 100%;
+      height: 165px;
+      background-color: #0d0d12;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .thumb-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .thumb-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    .dj-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.78);
+      color: #fff;
+      padding: 3px 7px;
+      font-size: 0.65rem;
+      font-weight: bold;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .play-overlay-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 34px;
+      background-color: rgba(255, 0, 0, 0.9);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(255,0,0,0.7);
+      pointer-events: none;
+    }
+
+    .play-overlay-icon::after {
+      content: '';
+      border-style: solid;
+      border-width: 7px 0 7px 12px;
+      border-color: transparent transparent transparent #ffffff;
+      margin-left: 2px;
+    }
+
+    .song-body {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .song-body h3 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .song-meta {
+      margin: 0;
+      color: #aaa;
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .song-link-text {
+      font-size: 0.75rem;
+      color: #4da3ff;
+      text-decoration: underline;
+      word-break: break-all;
+      margin: 2px 0 4px;
+      display: block;
+    }
+
+    .media-player-box {
+      margin: 4px 0;
+      width: 100%;
+    }
+
+    .media-player-box audio, .media-player-box video {
+      width: 100%;
+      max-height: 180px;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
+    .youtube-btn {
+      background-color: #e60000;
+      padding: 6px 11px;
+      text-decoration: none;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.78rem;
+    }
+
+    .download-btn {
+      background-color: #4CAF50;
+      padding: 6px 11px;
+      text-decoration: none;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.78rem;
+    }
+
+    .share-btn {
+      background-color: #25D366;
+      padding: 6px 11px;
+      text-decoration: none;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.78rem;
+    }
+
+    .delete-btn {
+      background-color: #d32f2f;
+      padding: 6px 10px;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    /* Modals with TOP & BOTTOM Cross (✖) Buttons */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.88);
+      justify-content: center;
+      align-items: flex-start;
+      padding: 25px 12px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background-color: #181822;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 480px;
+      border: 1px solid var(--primary-color);
+      margin-bottom: 40px;
+      position: relative;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+
+    /* Top Cross Button */
+    .top-close-cross {
+      background: #ff2a5f;
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      background: #232330;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 9px;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background-color: #0e0e14;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .progress-container {
+      display: none;
+      width: 100%;
+      background-color: #333;
+      border-radius: 5px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 18px;
+      background-color: #4CAF50;
+      transition: width 0.2s;
+    }
+
+    .progress-text {
+      text-align: center;
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .btn-next {
+      display: none;
+      background-color: #4CAF50;
+      width: 100%;
+      margin-top: 12px;
+      padding: 11px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+
+    .bottom-close-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #3a3a48;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .marquee-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 7px 0;
+      font-size: 0.95rem;
+      font-weight: bold;
+      z-index: 99;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { max-width: 100%; width: 100%; }
+      .banner-container { height: 160px; }
+      .studio-title h1 { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
-​<div id="bgImage"></div>
-<video id="bgVideo" autoplay loop muted playsinline></video>
-<div id="bg-overlay"></div>
-<div id="toastMsg"></div>
-​<header>
-<div class="brand">
-<img id="siteLogo" src="" alt="Logo">
-<span>DJ Mr Jhansi ✔</span>
-</div>
-<div class="admin-controls">
-<button class="btn btn-login" id="loginBtn" onclick="openLogin()">🔐 Login</button>
-<button class="btn btn-settings" id="settingsBtn" style="display:none;" onclick="openSettings()">⚙️ Settings</button>
-<button class="btn btn-upload" id="uploadBtn" style="display:none;" onclick="openUpload()">+ Upload</button>
-<button class="btn btn-logout" id="logoutBtn" style="display:none;" onclick="logoutAdmin()">🚪 Logout</button>
-</div>
-</header>
-​<div class="banner-container">
-<img id="siteBanner" src="" alt="DJ Mr Jhansi Banner">
-</div>
-​<div class="studio-title">
-<h1>DJ MR JHANSI OFFICIAL STUDIO</h1>
-<p>Download High-Quality Tracks directly from Cloud | Official Database</p>
-</div>
-​<div class="main-layout">
-<div class="sidebar">
-<h3>🔥 Playlists</h3>
-<ul class="playlist-menu">
-<li class="active" onclick="filterCategory('All', this)">🏠 All Playlists</li>
-​<div class="playlist-section-title">🎵 DJ REMIX SONGS</div>
-<li onclick="filterCategory('Bhojpuri Remix', this)">🔥 Bhojpuri Remix</li>
-<li onclick="filterCategory('Bollywood Mix', this)">🎸 Bollywood Mix</li>
-<li onclick="filterCategory('Haryanvi Dj', this)">💥 Haryanvi Dj</li>
-<li onclick="filterCategory('Punjabi Remix', this)">🕺 Punjabi Remix</li>
-<li onclick="filterCategory('DJ Competition Trance', this)">⚡ DJ Competition Trance</li>
-<li onclick="filterCategory('HD Videos', this)">🎬 HD Video Songs</li>
-<li onclick="filterCategory('Audio Remixes', this)">🎧 Audio Remixes</li>
-​<div class="playlist-section-title">🙏 BHAJANS & DEVOTIONAL</div>
-<li onclick="filterCategory('Bholenath & Shiv Shankar', this)">🔱 भोलेनाथ / शंकर भगवान</li>
-<li onclick="filterCategory('Jai Shri Ram & Hanuman', this)">🚩 जय श्री राम / हनुमान</li>
-<li onclick="filterCategory('Khatu Shyam Ji', this)">💙 श्याम बाबा / खाटू श्याम जी</li>
-<li onclick="filterCategory('Navratri & Mata Songs', this)">🌺 नवरात्रि स्पेशल सॉन्ग्स</li>
-<li onclick="filterCategory('Lord Ganesha Songs', this)">🟡 गणेश भगवान सॉन्ग्स</li>
-</ul>
-​<!-- Neat Side Promo & Contact Box at Bottom of Sidebar -->
-<div class="promo-banner" id="promoBannerSection">
-<div class="promo-text-box">
-<h4 id="promoHeading">🎧 DJ सॉन्ग या App बनवाएं!</h4>
-<p id="promoDescription">अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट लिंक या मोबाइल एप्लीकेशन बनवाने के लिए संपर्क करें!</p>
-</div>
-<div class="promo-actions">
-<a href="tel:+919999999999" id="promoCallBtn" class="btn-call">📞 Call</a>
-<a href="https://wa.me/919999999999" target="_blank" id="promoWaBtn" class="btn-wa-contact">💬 WhatsApp</a>
-</div>
-</div>
-</div>
-​<div class="content-area" id="dashboardArea">
-<h2>🔥 Trending DJ Mixes</h2>
-<div id="songsContainer" class="song-list"></div>
-</div>
-</div>
-​<div class="marquee-container">
-<marquee id="siteMarquee">🔥 WELCOME TO DJ MR JHANSI OFFICIAL STUDIO 🔥 BHOJPURI, BOLLYWOOD, HARYANVI & BHAJAN REMIXES 🔥 HIGH QUALITY DOWNLOADS 🔥</marquee>
-</div>
-​<!-- LOGIN MODAL -->
-<div id="loginModal" class="modal">
-<div class="modal-content">
-<div class="modal-header">
-<h2>Admin Login</h2>
-<button class="modal-close-top" onclick="closeModals()">✖ Close</button>
-</div>
-<div id="loginFormSection">
-<div class="form-group">
-<label>Gmail ID</label>
-<input type="email" id="adminEmail" placeholder="Enter Gmail ID">
-</div>
-<div class="form-group">
-<label>Enter PIN / Password</label>
-<input type="password" id="adminPin" placeholder="Enter PIN">
-<span class="forgot-pin-link" onclick="toggleResetMode(true)">🔑 पासवर्ड भूल गए? (Reset PIN)</span>
-</div>
-<button class="btn btn-login" style="width:100%; padding:10px;" onclick="checkPin()">Login Now</button>
-<button class="btn" style="width:100%; margin-top:8px; background:#444;" onclick="closeModals()">Cancel</button>
-</div>
-​<div id="resetPinSection" style="display:none;">
-<div class="form-group" style="border: 1px solid #ff9800;">
-<label>📧 अपनी रजिस्टर्ड Gmail ID डालें</label>
-<input type="email" id="resetEmailInput" placeholder="ritujhansi01@gmail.com">
-<label style="margin-top:8px;">📱 या रजिस्टर्ड मोबाइल नंबर डालें</label>
-<input type="text" id="resetPhoneInput" placeholder="Enter Registered Mobile Number">
-<label style="margin-top:8px;">🔐 नया पिन / पासवर्ड बनाएं (New PIN)</label>
-<input type="password" id="newResetPinInput" placeholder="Enter New PIN (e.g. 1234)">
-</div>
-<button class="btn" style="width:100%; padding:10px; background:#ff9800;" onclick="resetAdminPinNow()">✅ Reset & Save New PIN</button>
-<button class="btn" style="width:100%; margin-top:8px; background:#444;" onclick="toggleResetMode(false)">⬅ Back to Login</button>
-</div>
-</div>
-</div>
-​<!-- UPLOAD MODAL -->
-<div id="uploadModal" class="modal">
-<div class="modal-content">
-<div class="modal-header">
-<h2>Upload New Track</h2>
-<button class="modal-close-top" onclick="finishUpload()">✖ Close</button>
-</div>
-​<div class="form-group" style="border: 1px solid var(--primary-color);">
-<label>⚡ Choose Upload Type</label>
-<select id="uploadType" onchange="toggleUploadMode()">
-<option value="youtube">YouTube Link (Direct Link)</option>
-<option value="file">Upload File (MP3 / Video)</option>
-</select>
-</div>
-​<div class="form-group" id="youtubeGroup">
-<label>YouTube Link (Auto fills title & image)</label>
-<input type="text" id="youtubeLink" placeholder="https://youtu.be/..." oninput="autoDetectYouTube()">
-<div class="yt-Input-Preview" id="ytPreviewBox">
-<img id="ytPreviewImg" src="" alt="YouTube Thumbnail Preview">
-</div>
-</div>
-​<div class="form-group">
-<label>Track Title</label>
-<input type="text" id="songTitle" placeholder="e.g. DJ Mr Jhansi Official Video Mix">
-</div>
-​<div class="form-group">
-<label>Category (Playlist)</label>
-<select id="songCategory">
-<optgroup label="DJ Remix Songs">
-<option value="Bhojpuri Remix">Bhojpuri Remix</option>
-<option value="Bollywood Mix">Bollywood Mix</option>
-<option value="Haryanvi Dj">Haryanvi Dj</option>
-<option value="Punjabi Remix">Punjabi Remix</option>
-<option value="DJ Competition Trance">DJ Competition Trance</option>
-<option value="HD Videos">HD Videos</option>
-<option value="Audio Remixes">Audio Remixes</option>
-</optgroup>
-<optgroup label="Bhajans & Devotional">
-<option value="Bholenath & Shiv Shankar">भोलेनाथ / शंकर भगवान</option>
-<option value="Jai Shri Ram & Hanuman">जय श्री राम / हनुमान</option>
-<option value="Khatu Shyam Ji">श्याम बाबा / खाटू श्याम जी</option>
-<option value="Navratri & Mata Songs">नवरात्रि स्पेशल सॉन्ग्स</option>
-<option value="Lord Ganesha Songs">गणेश भगवान सॉन्ग्स</option>
-</optgroup>
-</select>
-</div>
-​<div class="form-group">
-<label>Video Size / Ratio</label>
-<select id="songRatio">
-<option value="YouTube Size (16:9)">YouTube Size (16:9)</option>
-<option value="Instagram Size (9:16)">Instagram Size (9:16)</option>
-<option value="Square Size (1:1)">Square Size (1:1)</option>
-<option value="Standard MP3 / Audio">Standard MP3 / Audio</option>
-</select>
-</div>
-​<div class="form-group" id="fileGroup" style="display:none;">
-<label>Choose File (MP3/Video)</label>
-<input type="file" id="songFile" accept="audio/*,video/*" style="color:white;">
-</div>
-​<button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:10px;" onclick="uploadTrack()">Start Upload</button>
-​<div class="progress-container" id="uploadProgressContainer">
-<div class="progress-bar" id="uploadProgressBar"></div>
-<div class="progress-text" id="uploadProgressText">0%</div>
-</div>
-​<button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">❌ Close Panel</button>
-<button class="btn" id="uploadCancelBtn" style="width:100%; margin-top:8px; background:#444;" onclick="closeModals()">❌ Close / Cancel</button>
-</div>
-</div>
-​<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal">
-<div class="modal-content">
-<div class="modal-header">
-<h2>🎨 Studio Settings</h2>
-<button class="modal-close-top" onclick="closeModals()">✖ Close</button>
-</div>
-​<div class="form-group" style="background: #1f2a38; border: 1px solid #2196f3;">
-<label>📞 आपका कांटेक्ट / WhatsApp मोबाइल नंबर</label>
-<input type="text" id="contactPhoneInput" placeholder="e.g. 9876543210">
-​<label style="margin-top:8px;">📢 इंट्रोडक्शन / प्रचार मैसेज</label>
-<input type="text" id="promoTextInput" placeholder="अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या ऐप बनवाएं...">
-​<button class="btn" style="width:100%; margin-top:8px; background: #2196f3;" onclick="saveContactAndPromoSettings()">Save Contact & Intro 📱</button>
-</div>
-​<div class="form-group" style="background: #2d241a; border: 1px solid #ff9800;">
-<label>📧 एडमिन Gmail ID बदलें</label>
-<input type="email" id="changeAdminEmailInput" placeholder="ritujhansi01@gmail.com">
-​<label style="margin-top:8px;">🔐 नया पासवर्ड / PIN डालें (Change Password)</label>
-<input type="text" id="changeAdminPinInput" placeholder="नया पिन डालें (e.g. 7860)">
-​<button class="btn" style="width:100%; margin-top:8px; background: #ff9800;" onclick="saveNewPasswordSettings()">Update Password / PIN 🔑</button>
-</div>
-​<div class="form-group" style="background: #331a24; border: 1px solid #ff3366;">
-<label>🅰️ Font Style</label>
-<select id="themeFont">
-<option value="'Arial', sans-serif">Arial (Standard)</option>
-<option value="'Comic Sans MS', cursive">Comic Sans (Stylish)</option>
-<option value="'Impact', fantasy">Impact (Bold & Heavy)</option>
-<option value="'Courier New', monospace">Courier New</option>
-</select>
-​<label style="margin-top:8px;">🎨 Theme Color</label>
-<input type="color" id="themeColor" value="#ff3366" style="width:100%; height:36px; cursor:pointer;">
-​<label style="margin-top:8px;">📝 Running Text (Marquee)</label>
-<input type="text" id="marqueeTextInput" placeholder="Type running text...">
-​<button class="btn" style="width:100%; margin-top:8px; background: #e91e63;" onclick="saveTextAndColorSettings()">Save Font & Color 💾</button>
-</div>
-​<div class="form-group">
-<label>🖼️ Upload Logo</label>
-<input type="file" id="newLogoFile" accept="image/*" style="color:white;">
-<button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newLogoFile', 'dj_mr_jhansi_logo')">Upload Logo ⬆️</button>
-</div>
-​<div class="form-group">
-<label>🎞️ Upload Banner</label>
-<input type="file" id="newBannerFile" accept="image/*" style="color:white;">
-<button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newBannerFile', 'dj_mr_jhansi_banner')">Upload Banner ⬆️</button>
-</div>
-​<div class="form-group">
-<label>✨ Upload Background FX (GIF / MP4)</label>
-<input type="file" id="newFxFile" accept="image/gif,video/mp4" style="color:white;">
-<button class="btn" style="width:100%; margin-top:4px; background:#2196f3;" onclick="uploadSettingFile('newFxFile', 'dj_mr_jhansi_bg')">Upload FX ⬆️</button>
-</div>
-​<div class="progress-container" id="settingProgressContainer">
-<div class="progress-bar" id="settingProgressBar"></div>
-<div class="progress-text" id="settingProgressText">0%</div>
-</div>
-​<button class="btn-next" id="settingNextBtn" onclick="finishSetting()">❌ Close Settings</button>
-<button class="btn" style="width:100%; margin-top:10px; background:#444;" onclick="closeModals()">❌ Close Settings</button>
-</div>
-</div>
-​<script>
-const CLOUD_NAME = "sygcuspm";
-const UPLOAD_PRESET = "dj_mr_jhansi";
-​// High-energy Hooded DJ & Fire/Laser Stage SVG Banner matching 1000728124.jpg
-const DEFAULT_BANNER = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="100%" height="100%"> <defs> <radialGradient id="stageGlow" cx="50%" cy="50%" r="70%"> <stop offset="0%" stop-color="#5a082d"/> <stop offset="50%" stop-color="#19041c"/> <stop offset="100%" stop-color="#050208"/> </radialGradient> <linearGradient id="fireGrad" x1="0%" y1="0%" x2="0%" y2="100%"> <stop offset="0%" stop-color="#ffcc00"/> <stop offset="50%" stop-color="#ff3300"/> <stop offset="100%" stop-color="#990000"/> </linearGradient> </defs> <rect width="1200" height="300" fill="url(#stageGlow)"/> <!-- Concert Stage Trusses & Lasers --> <g stroke="#ff0055" stroke-width="3" opacity="0.55"> <line x1="0" y1="0" x2="480" y2="300"/> <line x1="1200" y1="0" x2="720" y2="300"/> </g> <g stroke="#00e5ff" stroke-width="3" opacity="0.5"> <line x1="150" y1="0" x2="550" y2="300"/> <line x1="1050" y1="0" x2="650" y2="300"/> </g> <g stroke="#ffaa00" stroke-width="4" opacity="0.65"> <line x1="350" y1="0" x2="100" y2="300"/> <line x1="850" y1="0" x2="1100" y2="300"/> </g> <!-- Center Halo & Hooded DJ Silhouette --> <circle cx="600" cy="135" r="115" fill="#12020a" stroke="#ff3300" stroke-width="4" opacity="0.85"/> <path d="M535,140 Q600,35 665,140 L690,210 L510,210 Z" fill="#1a0510" stroke="#ff5500" stroke-width="2"/> <path d="M565,115 Q600,65 635,115 Q600,145 565,115 Z" fill="#050002"/> <!-- Glowing Red Eyes --> <circle cx="585" cy="108" r="5" fill="#ff0022"/> <circle cx="615" cy="108" r="5" fill="#ff0022"/> <!-- 3D Bold Metallic & Fire Typography --> <text x="600" y="198" text-anchor="middle" fill="url(#fireGrad)" font-family="Impact, Arial Black, sans-serif" font-size="86" font-style="italic" letter-spacing="4" stroke="#000000" stroke-width="4">DJ MR</text> <text x="600" y="262" text-anchor="middle" fill="#ffffff" font-family="Impact, Arial Black, sans-serif" font-size="56" letter-spacing="9" stroke="#000000" stroke-width="3">JHANSI</text> </svg>);
-​const DEFAULT_LOGO = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"> <circle cx="50" cy="50" r="48" fill="#120418" stroke="#ff3366" stroke-width="4"/> <text x="50" y="46" text-anchor="middle" fill="#ff9900" font-family="Impact, sans-serif" font-size="27" letter-spacing="1">DJ MR</text> <text x="50" y="74" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-weight="bold" font-size="18">JHANSI</text> </svg>);
-​// Exact Default Song from Screenshot 1000728124.jpg
-const DEFAULT_SONGS = [
-{
-id: 'default_shyam_mix',
-title: 'DJ Mr Jhansi Official Video Mix',
-category: 'Khatu Shyam Ji',
-ratio: 'YouTube Size (16:9)',
-youtube: 'https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM',
-url: 'https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM',
-date: '15/10/2026',
-timestamp: 1700000000000
-}
-];
-​const CATEGORY_ALIASES = {
-"Khatu Shyam Ji": ["khatu shyam ji", "श्याम बाबा / खाटू श्याम जी"],
-"Bholenath & Shiv Shankar": ["bholenath & shiv shankar", "भोलेनाथ / शंकर भगवान"],
-"Jai Shri Ram & Hanuman": ["jai shri ram & hanuman", "जय श्री राम / हनुमान"],
-"Navratri & Mata Songs": ["navratri & mata songs", "नवरात्रि स्पेशल सॉन्ग्स"],
-"Lord Ganesha Songs": ["lord ganesha songs", "गणेश भगवान सॉन्ग्स"],
-"HD Videos": ["hd videos", "hd video songs"]
-};
-​window.allSongs = [...DEFAULT_SONGS];
-window.currentCategory = 'All';
-window.isAdmin = false;
-window.adminCredentials = {
-email: 'ritujhansi01@gmail.com',
-pin: '7860',
-phone: ''
-};
-​// Blocks any old white placeholder images (1200x250 / placehold.co / via.placeholder)
-function isValidImageUrl(url) {
-if (!url || typeof url !== 'string') return false;
-const lower = url.toLowerCase();
-if (
-lower.includes('placehold') ||
-lower.includes('1200x250') ||
-lower.includes('1200') ||
-lower.includes('dummy') ||
-lower.includes('default_banner') ||
-lower.includes('text=dj')
-) {
-return false;
-}
-return url.startsWith('http') || url.startsWith('data:image');
-}
-​function initDefaults() {
-const logoEl = document.getElementById('siteLogo');
-const bannerEl = document.getElementById('siteBanner');
-logoEl.src = DEFAULT_LOGO;
-bannerEl.src = DEFAULT_BANNER;
-​logoEl.onerror = () => { logoEl.src = DEFAULT_LOGO; };
-bannerEl.onerror = () => { bannerEl.src = DEFAULT_BANNER; };
-​const savedSettings = localStorage.getItem('djSettings');
-if (savedSettings) {
-try {
-const parsedSettings = JSON.parse(savedSettings);
-if (!isValidImageUrl(parsedSettings.banner)) delete parsedSettings.banner;
-if (!isValidImageUrl(parsedSettings.logo)) delete parsedSettings.logo;
-applySettingsObject(parsedSettings);
-} catch(e){}
-}
-​const savedSongs = localStorage.getItem('djSongs');
-if (savedSongs) {
-try {
-const parsed = JSON.parse(savedSongs);
-if (Array.isArray(parsed) && parsed.length > 0) {
-window.allSongs = parsed;
-}
-} catch(e){}
-}
-filterCategory('All');
-}
-​function extractYouTubeId(url) {
-if (!url) return null;
-const regExp = /(?:youtu.be/|youtube.com/(?:embed/|v/|watch?v=|shorts/|watch?.+&v=))([a-zA-Z0-9_-]{11})/;
-const match = url.match(regExp);
-return match ? match[1] : null;
-}
-​function playInlineYouTube(containerId, ytId) {
-const box = document.getElementById(containerId);
-if (!box || !ytId) return;
-box.innerHTML = <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
-}
-​function showMessage(msg) {
-const toast = document.getElementById('toastMsg');
-if (!toast) return;
-toast.innerText = msg;
-toast.style.display = 'block';
-setTimeout(() => { toast.style.display = 'none'; }, 3200);
-}
-​function applySettingsObject(item) {
-if (!item) return;
-if (isValidImageUrl(item.logo)) {
-document.getElementById('siteLogo').src = item.logo;
-} else {
-document.getElementById('siteLogo').src = DEFAULT_LOGO;
-}
-​if (isValidImageUrl(item.banner)) {
-document.getElementById('siteBanner').src = item.banner;
-} else {
-document.getElementById('siteBanner').src = DEFAULT_BANNER;
-}
-​if (item.bgFx) applyBackground(item.bgFx);
-if (item.color) document.documentElement.style.setProperty('--primary-color', item.color);
-if (item.font) document.body.style.fontFamily = item.font;
-if (item.marquee) document.getElementById('siteMarquee').innerText = item.marquee;
-​if (item.contactPhone) {
-window.adminCredentials.phone = item.contactPhone;
-const cleanPhone = item.contactPhone.replace(/\D/g, '');
-const waNumber = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
-document.getElementById('promoCallBtn').href = 'tel:' + item.contactPhone;
-document.getElementById('promoWaBtn').href = https://wa.me/${waNumber}?text=${encodeURIComponent('नमस्ते DJ Mr Jhansi! मुझे DJ सॉन्ग / वेबसाइट / एप्लीकेशन बनवाने के बारे में जानकारी चाहिए।')};
-const phoneInput = document.getElementById('contactPhoneInput');
-if (phoneInput) phoneInput.value = item.contactPhone;
-}
-​if (item.promoText) {
-document.getElementById('promoDescription').innerText = item.promoText;
-const promoInput = document.getElementById('promoTextInput');
-if (promoInput) promoInput.value = item.promoText;
-}
-​if (item.adminEmail) {
-window.adminCredentials.email = item.adminEmail.trim().toLowerCase();
-}
-if (item.adminPin) {
-window.adminCredentials.pin = String(item.adminPin).trim();
-}
-}
-​function applyBackground(url) {
-if(!url) return;
-const bgVideo = document.getElementById('bgVideo');
-const bgImage = document.getElementById('bgImage');
-​if(url.endsWith('.mp4') || url.includes('/video/upload/')) {
-bgImage.style.display = 'none';
-bgVideo.style.display = 'block';
-bgVideo.src = url;
-} else {
-bgVideo.style.display = 'none';
-bgVideo.src = "";
-bgImage.style.display = 'block';
-bgImage.style.backgroundImage = url('${url}');
-}
-}
-​function openLogin() {
-toggleResetMode(false);
-document.getElementById('loginModal').style.display = 'flex';
-}
-function openUpload() {
-document.getElementById('uploadModal').style.display = 'flex';
-resetUploadUI();
-}
-function openSettings() {
-document.getElementById('changeAdminEmailInput').value = window.adminCredentials.email;
-document.getElementById('changeAdminPinInput').value = window.adminCredentials.pin;
-document.getElementById('contactPhoneInput').value = window.adminCredentials.phone || '';
-document.getElementById('promoTextInput').value = document.getElementById('promoDescription').innerText;
-document.getElementById('settingsModal').style.display = 'flex';
-resetSettingsUI();
-}
-function closeModals() {
-document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-}
-​function toggleResetMode(showReset) {
-document.getElementById('loginFormSection').style.display = showReset ? 'none' : 'block';
-document.getElementById('resetPinSection').style.display = showReset ? 'block' : 'none';
-}
-​function checkPin() {
-const email = document.getElementById('adminEmail').value.trim().toLowerCase();
-const pin = document.getElementById('adminPin').value.trim();
-​if(email === window.adminCredentials.email && pin === window.adminCredentials.pin) {
-window.isAdmin = true;
-document.getElementById('loginBtn').style.display = 'none';
-document.getElementById('uploadBtn').style.display = 'inline-block';
-document.getElementById('settingsBtn').style.display = 'inline-block';
-document.getElementById('logoutBtn').style.display = 'inline-block';
-closeModals();
-filterCategory(window.currentCategory);
-showMessage("✅ Admin Login Successful!");
-} else {
-showMessage("❌ गलत Gmail ID या PIN! नीचे Reset PIN पर क्लिक करें।");
-}
-}
-​function logoutAdmin() {
-window.isAdmin = false;
-document.getElementById('loginBtn').style.display = 'inline-block';
-document.getElementById('uploadBtn').style.display = 'none';
-document.getElementById('settingsBtn').style.display = 'none';
-document.getElementById('logoutBtn').style.display = 'none';
-filterCategory(window.currentCategory);
-showMessage("🔒 Logged Out Successfully!");
-}
-​function resetAdminPinNow() {
-const emailInput = document.getElementById('resetEmailInput').value.trim().toLowerCase();
-const phoneInput = document.getElementById('resetPhoneInput').value.trim();
-const newPin = document.getElementById('newResetPinInput').value.trim();
-​if (!newPin || newPin.length < 4) {
-showMessage("⚠️ कृपया कम से कम 4 अंकों का नया पिन डालें!");
-return;
-}
-​const emailMatch = emailInput && (emailInput === window.adminCredentials.email || emailInput === 'ritujhansi01@gmail.com');
-const phoneMatch = phoneInput && window.adminCredentials.phone && phoneInput.replace(/\D/g, '') === window.adminCredentials.phone.replace(/\D/g, '');
-​if (emailMatch || phoneMatch) {
-window.adminCredentials.pin = newPin;
-const updateData = { adminPin: newPin };
-applySettingsObject(updateData);
-if (window.cloudSaveSetting) window.cloudSaveSetting(updateData);
-toggleResetMode(false);
-document.getElementById('adminEmail').value = window.adminCredentials.email;
-document.getElementById('adminPin').value = newPin;
-showMessage("✅ आपका नया PIN सेव हो गया है! अब Login Now दबाएं।");
-} else {
-showMessage("❌ रजिस्टर्ड Gmail ID या मोबाइल नंबर मैच नहीं हुआ!");
-}
-}
-​function saveContactAndPromoSettings() {
-const phone = document.getElementById('contactPhoneInput').value.trim();
-const promo = document.getElementById('promoTextInput').value.trim();
-const updateData = {};
-if (phone) updateData.contactPhone = phone;
-if (promo) updateData.promoText = promo;
-applySettingsObject(updateData);
-if (window.cloudSaveSetting) window.cloudSaveSetting(updateData);
-showMessage("✅ मोबाइल नंबर और प्रचार मैसेज हमेशा के लिए सेव हो गया!");
-}
-​function saveNewPasswordSettings() {
-const newEmail = document.getElementById('changeAdminEmailInput').value.trim().toLowerCase();
-const newPin = document.getElementById('changeAdminPinInput').value.trim();
-if (!newEmail || !newPin) {
-showMessage("⚠️ कृपया Gmail और नया PIN दोनों भरें!");
-return;
-}
-const updateData = { adminEmail: newEmail, adminPin: newPin };
-applySettingsObject(updateData);
-if (window.cloudSaveSetting) window.cloudSaveSetting(updateData);
-showMessage("✅ नया पासवर्ड / PIN सफलतापूर्वक बदल दिया गया!");
-}
-​function toggleUploadMode() {
-const mode = document.getElementById('uploadType').value;
-document.getElementById('youtubeGroup').style.display = mode === 'youtube' ? 'block' : 'none';
-document.getElementById('fileGroup').style.display = mode === 'file' ? 'block' : 'none';
-}
-​function autoDetectYouTube() {
-const ytUrl = document.getElementById('youtubeLink').value.trim();
-const titleInput = document.getElementById('songTitle');
-const ratioSelect = document.getElementById('songRatio');
-const previewBox = document.getElementById('ytPreviewBox');
-const previewImg = document.getElementById('ytPreviewImg');
-​const ytId = extractYouTubeId(ytUrl);
-if (ytId) {
-previewImg.src = https://i.ytimg.com/vi/${ytId}/hqdefault.jpg;
-previewBox.style.display = 'block';
-ratioSelect.value = "YouTube Size (16:9)";
-if (!titleInput.value) titleInput.value = "DJ Mr Jhansi Official Video Mix";
-fetch(https://noembed.com/embed?url=https://www.youtube.com/watch?v=${ytId})
-.then(res => res.json())
-.then(data => {
-if (data && data.title && titleInput.value === "DJ Mr Jhansi Official Video Mix") {
-titleInput.value = data.title;
-}
-})
-.catch(() => {});
-} else {
-previewBox.style.display = 'none';
-}
-}
-​function resetUploadUI() {
-document.getElementById('uploadType').value = 'youtube';
-toggleUploadMode();
-document.getElementById('songFile').value = '';
-document.getElementById('songTitle').value = '';
-document.getElementById('youtubeLink').value = '';
-document.getElementById('ytPreviewBox').style.display = 'none';
-document.getElementById('startUploadBtn').style.display = 'block';
-document.getElementById('uploadCancelBtn').style.display = 'block';
-document.getElementById('uploadProgressContainer').style.display = 'none';
-document.getElementById('uploadNextBtn').style.display = 'none';
-document.getElementById('uploadProgressBar').style.width = '0%';
-}
-​function resetSettingsUI() {
-document.getElementById('settingProgressContainer').style.display = 'none';
-document.getElementById('settingNextBtn').style.display = 'none';
-document.getElementById('settingProgressBar').style.width = '0%';
-}
-​function saveTextAndColorSettings() {
-const font = document.getElementById('themeFont').value;
-const color = document.getElementById('themeColor').value;
-const marqueeText = document.getElementById('marqueeTextInput').value;
-​let updateData = { font: font, color: color };
-if (marqueeText.trim() !== "") updateData.marquee = marqueeText;
-​applySettingsObject(updateData);
-if(window.cloudSaveSetting) window.cloudSaveSetting(updateData);
-showMessage("✅ Settings Saved Successfully!");
-}
-​function uploadTrack() {
-const mode = document.getElementById('uploadType').value;
-const title = document.getElementById('songTitle').value.trim();
-const category = document.getElementById('songCategory').value;
-const ratio = document.getElementById('songRatio').value;
-const ytLink = document.getElementById('youtubeLink').value.trim();
-const file = document.getElementById('songFile').files[0];
-​if(!title) { showMessage("⚠️ Please enter a track title!"); return; }
-if(mode === 'youtube' && !ytLink) { showMessage("⚠️ Please paste a YouTube link!"); return; }
-if(mode === 'file' && !file) { showMessage("⚠️ Please choose a file to upload!"); return; }
-​document.getElementById('startUploadBtn').style.display = 'none';
-document.getElementById('uploadCancelBtn').style.display = 'none';
-document.getElementById('uploadProgressContainer').style.display = 'block';
-​const saveToDatabase = async (mediaUrl) => {
-const newSong = {
-title: title,
-category: category,
-ratio: ratio,
-youtube: (mode === 'youtube' ? ytLink : ''),
-url: mediaUrl,
-date: new Date().toLocaleDateString('en-GB'),
-timestamp: Date.now()
-};
-​// Render immediately and also push to Cloud
-const tempId = 'local_' + Date.now();
-const optimisticSong = { ...newSong, id: tempId };
-window.allSongs.unshift(optimisticSong);
-localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
-filterCategory('All');
-​if(window.cloudSaveSong) {
-await window.cloudSaveSong(newSong);
-}
-​window.currentCategory = 'All';
-const menuItems = document.querySelectorAll('.playlist-menu li');
-menuItems.forEach(li => li.classList.remove('active'));
-if (menuItems[0]) menuItems[0].classList.add('active');
-​document.getElementById('uploadProgressBar').style.width = '100%';
-document.getElementById('uploadProgressText').innerText = "100% - Saved to Cloud Database!";
-document.getElementById('uploadNextBtn').style.display = 'block';
-​showMessage("✅ गाना क्लाउड पर सेव हो गया! अब हर फोन में दिखेगा।");
-};
-​if(mode === 'file') {
-const formData = new FormData();
-formData.append("file", file);
-formData.append("upload_preset", UPLOAD_PRESET);
-​const xhr = new XMLHttpRequest();
-let resourceType = file.type.startsWith('video') ? 'video' : 'auto';
-xhr.open("POST", https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload);
-​xhr.upload.onprogress = (e) => {
-if (e.lengthComputable) {
-const percent = Math.round((e.loaded / e.total) * 100);
-document.getElementById('uploadProgressBar').style.width = percent + '%';
-document.getElementById('uploadProgressText').innerText = percent + '% Uploading File...';
-}
-};
-xhr.onload = () => {
-if (xhr.status === 200) {
-saveToDatabase(JSON.parse(xhr.responseText).secure_url);
-} else {
-showMessage("❌ File upload failed!");
-resetUploadUI();
-}
-};
-xhr.onerror = () => {
-showMessage("❌ Network error during upload!");
-resetUploadUI();
-};
-xhr.send(formData);
-} else {
-saveToDatabase(ytLink);
-}
-}
-​function finishUpload() {
-closeModals();
-resetUploadUI();
-const dash = document.getElementById('dashboardArea');
-if (dash) dash.scrollIntoView({ behavior: 'smooth' });
-}
-​function deleteSong(songId) {
-if(window.cloudDeleteSong && !songId.startsWith('local_') && !songId.startsWith('default_')) {
-window.cloudDeleteSong(songId);
-}
-window.allSongs = window.allSongs.filter(s => s.id !== songId);
-localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
-filterCategory(window.currentCategory);
-showMessage("🗑️ Track removed!");
-}
-​function uploadSettingFile(inputId, publicId) {
-const file = document.getElementById(inputId).files[0];
-if(!file) { showMessage("⚠️ Please select a file first!"); return; }
-​document.getElementById('settingProgressContainer').style.display = 'block';
-​const formData = new FormData();
-formData.append("file", file);
-formData.append("upload_preset", UPLOAD_PRESET);
-​const xhr = new XMLHttpRequest();
-let resourceType = file.type.startsWith('video') ? 'video' : 'image';
-xhr.open("POST", https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload);
-​xhr.upload.onprogress = (e) => {
-if (e.lengthComputable) {
-const percent = Math.round((e.loaded / e.total) * 100);
-document.getElementById('settingProgressBar').style.width = percent + '%';
-document.getElementById('settingProgressText').innerText = percent + '% Uploading...';
-}
-};
-​xhr.onload = () => {
-if (xhr.status === 200) {
-const fileUrl = JSON.parse(xhr.responseText).secure_url;
-let updateData = {};
-if(publicId === 'dj_mr_jhansi_logo') updateData = {logo: fileUrl};
-if(publicId === 'dj_mr_jhansi_banner') updateData = {banner: fileUrl};
-if(publicId === 'dj_mr_jhansi_bg') updateData = {bgFx: fileUrl};
-​applySettingsObject(updateData);
-if(window.cloudSaveSetting) window.cloudSaveSetting(updateData);
-​document.getElementById('settingProgressText').innerText = "100% - Applied & Saved to Cloud!";
-document.getElementById('settingNextBtn').style.display = 'block';
-showMessage("✅ इमेज क्लाउड पर सेव हो गई!");
-} else {
-showMessage("❌ Upload failed.");
-resetSettingsUI();
-}
-};
-xhr.send(formData);
-}
-​function finishSetting() { closeModals(); resetSettingsUI(); }
-​function categoryMatches(songCat, selectedCat) {
-if (!songCat || !selectedCat) return false;
-const s = songCat.trim().toLowerCase();
-const target = selectedCat.trim().toLowerCase();
-if (s === target) return true;
-const aliases = CATEGORY_ALIASES[selectedCat];
-if (aliases && aliases.includes(s)) return true;
-return false;
-}
-​window.filterCategory = function(cat, element) {
-window.currentCategory = cat || 'All';
-if(element) {
-document.querySelectorAll('.playlist-menu li').forEach(li => li.classList.remove('active'));
-element.classList.add('active');
-}
-​const container = document.getElementById('songsContainer');
-if(!container) return;
-container.innerHTML = '';
-​let filtered = window.allSongs;
-if(window.currentCategory !== 'All') {
-filtered = window.allSongs.filter(s => categoryMatches(s.category, window.currentCategory));
-}
-​filtered.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-​if(filtered.length === 0) {
-container.innerHTML = '<p style="color:#aaa;">No tracks found in this category. Upload some music!</p>';
-return;
-}
-​filtered.forEach((song, idx) => {
-let targetUrl = (song.url && song.url.startsWith('http')) ? song.url : (song.youtube || '#');
-let ytUrl = song.youtube || targetUrl;
-let ytId = extractYouTubeId(ytUrl);
-let previewId = 'media_box_' + idx;
-​let mediaHtml = '';
-if (ytId) {
-let thumbUrl = https://i.ytimg.com/vi/${ytId}/hqdefault.jpg;
-mediaHtml = <div class="media-preview" id="${previewId}" onclick="playInlineYouTube('${previewId}', '${ytId}')"> <img src="${thumbUrl}" alt="${song.title}"> <div class="play-overlay"></div> <span class="watermark-badge">DJ MR JHANSI</span> </div>;
-} else if (targetUrl.endsWith('.mp4') || targetUrl.includes('/video/upload/')) {
-mediaHtml = <div class="media-preview"> <video src="${targetUrl}" controls preload="metadata"></video> <span class="watermark-badge">DJ MR JHANSI</span> </div>;
-} else {
-let fallbackLogo = document.getElementById('siteLogo').src || DEFAULT_LOGO;
-mediaHtml = <div class="media-preview" onclick="window.open('${targetUrl}', '_blank')"> <img src="${fallbackLogo}" alt="${song.title}"> <div class="play-overlay"></div> <span class="watermark-badge">DJ MR JHANSI</span> </div>;
-}
-​let ytButton = (song.youtube || ytId) ? <a href="${targetUrl}" target="_blank" class="youtube-btn">▶ YouTube</a> : '';
-let shareText = encodeURIComponent(🔥 Listen & Download: ${song.title} (${song.category}) from DJ Mr Jhansi Official Studio! Check here: ${window.location.href});
-let whatsappShare = https://api.whatsapp.com/send?text=${shareText};
-let deleteBtn = window.isAdmin ? <button class="delete-btn" onclick="deleteSong('${song.id}')">🗑️</button> : '';
-​container.innerHTML += <div class="song-card"> ${mediaHtml} <div class="song-body"> <div class="song-info"> <h3>${song.title}</h3> <p>📁 ${song.category} | 📐 ${song.ratio || 'YouTube Size (16:9)'} | 📅 ${song.date || '15/10/2026'}</p> <a href="${targetUrl}" target="_blank" class="song-link-preview">${targetUrl}</a> </div> <div class="action-buttons"> ${ytButton} <a href="${targetUrl}" target="_blank" class="download-btn">⬇ Download / Play</a> <a href="${whatsappShare}" target="_blank" class="share-btn">🔗 Share</a> ${deleteBtn} </div> </div> </div>;
-});
-};
-​initDefaults();
-</script>
-​<!-- Direct Cloud Firestore Connection (Auto-Sync & Clean Fallback) -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-​const fbConfig = {
-apiKey: "AIzaSyDripMMFxcqxeG3j5gF9QL1adbO8_5oicw",
-authDomain: "dj-mr-jhansi.firebaseapp.com",
-projectId: "dj-mr-jhansi",
-storageBucket: "dj-mr-jhansi.firebasestorage.app",
-messagingSenderId: "455631977039",
-appId: "1:455631977039:web:ff10f18fc1bf91e2af083a"
-};
-​const app = initializeApp(fbConfig);
-const db = getFirestore(app);
-​const SONGS_COLLECTION = collection(db, 'songs');
-const SETTINGS_DOC = doc(db, 'settings', 'studio_config');
-​// Live listener for Banner, Logo, Phone, PIN & Theme across all devices
-onSnapshot(SETTINGS_DOC, (docSnap) => {
-if (docSnap.exists()) {
-const data = docSnap.data();
-// Scrub any old invalid placeholder URLs from cloud data
-if (data.banner && !isValidImageUrl(data.banner)) {
-delete data.banner;
-}
-if (data.logo && !isValidImageUrl(data.logo)) {
-delete data.logo;
-}
-applySettingsObject(data);
-const currentLocal = JSON.parse(localStorage.getItem('djSettings') || '{}');
-localStorage.setItem('djSettings', JSON.stringify({ ...currentLocal, ...data }));
-}
-}, (err) => {
-console.warn("Settings sync info:", err);
-});
-​// Live listener for Songs across all devices + Auto-Sync local tracks to Cloud
-let hasSeeded = false;
-onSnapshot(SONGS_COLLECTION, (snapshot) => {
-const fetchedSongs = [];
-snapshot.forEach(docItem => {
-const data = docItem.data();
-data.id = docItem.id;
-fetchedSongs.push(data);
-});
-​if (fetchedSongs.length > 0) {
-window.allSongs = fetchedSongs;
-localStorage.setItem('djSongs', JSON.stringify(window.allSongs));
-filterCategory(window.currentCategory);
-} else if (!hasSeeded) {
-hasSeeded = true;
-// Upload existing local songs or default Shyam Baba track to Cloud automatically
-const localSaved = JSON.parse(localStorage.getItem('djSongs') || '[]');
-const songsToUpload = localSaved.length > 0 ? localSaved : DEFAULT_SONGS;
-songsToUpload.forEach(songItem => {
-const cleanSong = {
-title: songItem.title || 'DJ Mr Jhansi Official Video Mix',
-category: songItem.category || 'Khatu Shyam Ji',
-ratio: songItem.ratio || 'YouTube Size (16:9)',
-youtube: songItem.youtube || songItem.url || '',
-url: songItem.url || songItem.youtube || '',
-date: songItem.date || '15/10/2026',
-timestamp: songItem.timestamp || Date.now()
-};
-addDoc(SONGS_COLLECTION, cleanSong).catch(() => {});
-});
-}
-}, (err) => {
-console.warn("Songs sync info:", err);
-});
-​window.cloudSaveSetting = async (settingData) => {
-const currentSettings = JSON.parse(localStorage.getItem('djSettings') || '{}');
-const updated = { ...currentSettings, ...settingData };
-localStorage.setItem('djSettings', JSON.stringify(updated));
-try {
-await setDoc(SETTINGS_DOC, settingData, { merge: true });
-} catch (e) {
-console.error("Cloud setting save error:", e);
-}
-};
-​window.cloudSaveSong = async (songData) => {
-try {
-await addDoc(SONGS_COLLECTION, songData);
-} catch (e) {
-console.error("Cloud song save error:", e);
-}
-};
-​window.cloudDeleteSong = async (songId) => {
-if (!songId) return;
-try {
-await deleteDoc(doc(db, 'songs', songId));
-} catch (e) {
-console.error("Cloud song delete error:", e);
-}
-};
-</script>
+
+  <div id="bgImage"></div>
+  <video id="bgVideo" autoplay loop muted playsinline></video>
+  <div id="bg-overlay"></div>
+
+  <header>
+    <div class="brand">
+      <img id="siteLogo" src="" alt="Logo">
+      <span>DJ Mr Jhansi ✔</span>
+    </div>
+    <div class="admin-controls">
+      <button class="btn btn-login" id="loginBtn" onclick="openLogin()">🔐 Login</button>
+      <button class="btn btn-settings" id="settingsBtn" style="display:none;" onclick="openSettings()">⚙️ Settings</button>
+      <button class="btn btn-upload" id="uploadBtn" style="display:none;" onclick="openUpload()">+ Upload Song</button>
+      <button class="btn btn-logout" id="logoutBtn" style="display:none;" onclick="logoutAdmin()">🚪 Logout</button>
+    </div>
+  </header>
+
+  <div class="banner-container">
+    <img id="siteBanner" src="" alt="DJ Mr Jhansi Official Banner">
+  </div>
+  
+  <div class="studio-title">
+    <h1>DJ MR JHANSI OFFICIAL STUDIO</h1>
+    <p>Download High-Quality Tracks directly from Cloud | Official Database</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="sidebar">
+      <h3>🔥 Playlists</h3>
+      <ul class="playlist-menu" id="playlistMenu">
+        <li class="active" onclick="filterCategory('All', this)">🏠 All Playlists</li>
+        
+        <div class="playlist-section-title">🎵 DJ Remix Songs</div>
+        <li onclick="filterCategory('Bhojpuri Remix', this)">🔥 Bhojpuri Remix</li>
+        <li onclick="filterCategory('Bollywood Mix', this)">🎸 Bollywood Mix</li>
+        <li onclick="filterCategory('Haryanvi Dj', this)">💥 Haryanvi Dj</li>
+        <li onclick="filterCategory('Punjabi Remix', this)">🕺 Punjabi Remix</li>
+        <li onclick="filterCategory('DJ Competition Trance', this)">⚡ DJ Competition Trance</li>
+        <li onclick="filterCategory('HD Videos', this)">🎬 HD Video Songs</li>
+        <li onclick="filterCategory('Audio Remixes', this)">🎧 Audio Remixes</li>
+
+        <div class="playlist-section-title">🙏 Bhajans & Devotional</div>
+        <li onclick="filterCategory('Bholenath & Shiv Shankar', this)">🔱 भोलेनाथ / शंकर भगवान</li>
+        <li onclick="filterCategory('Jai Shri Ram & Hanuman', this)">🚩 जय श्री राम / हनुमान</li>
+        <li onclick="filterCategory('Khatu Shyam Ji', this)">💙 श्याम बाबा / खाटू श्याम जी</li>
+        <li onclick="filterCategory('Navratri & Mata Songs', this)">🌺 नवरात्रि स्पेशल सॉन्ग्स</li>
+        <li onclick="filterCategory('Lord Ganesha Songs', this)">🟡 गणेश भगवान सॉन्ग्स</li>
+      </ul>
+
+      <!-- Side Bottom Promo & Contact Box -->
+      <div class="promo-side-box">
+        <h4 id="promoHeading">🎧 DJ सॉन्ग या App बनवाएं!</h4>
+        <p id="promoSubtext">अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या मोबाइल ऐप बनवाने के लिए संपर्क करें!</p>
+        <div class="promo-btns">
+          <a id="callContactBtn" href="tel:+919876543210" class="btn-call">📞 Call</a>
+          <a id="waContactBtn" href="https://wa.me/919876543210" target="_blank" class="btn-wa">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <h2>🔥 Trending DJ Mixes</h2>
+      <div id="songsContainer" class="song-grid"></div>
+    </div>
+  </div>
+
+  <div class="marquee-container">
+    <marquee id="siteMarquee">🔥 WELCOME TO DJ MR JHANSI OFFICIAL STUDIO 🔥 BHOJPURI, BOLLYWOOD, HARYANVI & BHAJAN REMIXES 🔥 HIGH QUALITY DOWNLOADS 🔥</marquee>
+  </div>
+
+  <!-- LOGIN MODAL (With Top ✖ and Bottom ✖ Close) -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔐 Admin Login</h2>
+        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+      </div>
+      <div class="form-group">
+        <label>Gmail ID</label>
+        <input type="email" id="adminEmail" placeholder="ritujhansi01@gmail.com">
+      </div>
+      <div class="form-group">
+        <label>Enter PIN</label>
+        <input type="password" id="adminPin" placeholder="Enter PIN (Default: 7860)">
+      </div>
+      <button class="btn btn-login" style="width:100%; padding:11px;" onclick="checkPin()">✅ Login Now</button>
+      <button class="btn" style="width:100%; margin-top:8px; background:#ff9800; padding:9px;" onclick="resetAdminPinPrompt()">🔄 Forgot / Reset PIN?</button>
+      <button class="bottom-close-btn" onclick="closeModals()">✖ Close / Cancel</button>
+    </div>
+  </div>
+
+  <!-- UPLOAD MODAL (With Top ✖ and Bottom ✖ Close & Full Sections) -->
+  <div id="uploadModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>⬆️ Upload New Track</h2>
+        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+      </div>
+      
+      <div class="form-group" style="border: 1px solid var(--primary-color);">
+        <label>⚡ Choose Upload Type (अपलोड का तरीका चुनें)</label>
+        <select id="uploadType" onchange="toggleUploadMode()">
+          <option value="youtube">▶ YouTube Video Link</option>
+          <option value="file">🎵 Upload MP3 / Video File (From Phone)</option>
+          <option value="external">🔗 Direct Audio / Video Link (URL)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="youtubeGroup">
+        <label>YouTube Link (पेस्ट करते ही नाम अपने आप आएगा)</label>
+        <input type="text" id="youtubeLink" placeholder="https://youtu.be/..." oninput="autoDetectYouTube()">
+      </div>
+
+      <div class="form-group" id="fileGroup" style="display:none;">
+        <label>📁 Choose MP3 Audio or Video File</label>
+        <input type="file" id="songFile" accept="audio/*,video/*" onchange="autoFillFileName()">
+      </div>
+
+      <div class="form-group" id="externalGroup" style="display:none;">
+        <label>🔗 Direct MP3 / Video Download Link</label>
+        <input type="text" id="externalLink" placeholder="https://example.com/song.mp3">
+      </div>
+
+      <div class="form-group">
+        <label>🎵 Track Title (गाने का नाम)</label>
+        <input type="text" id="songTitle" placeholder="e.g. DJ Mr Jhansi Official Video Mix">
+      </div>
+
+      <div class="form-group">
+        <label>📁 Category (Playlist)</label>
+        <select id="songCategory">
+          <optgroup label="DJ Remix Songs">
+            <option value="Bhojpuri Remix">Bhojpuri Remix</option>
+            <option value="Bollywood Mix">Bollywood Mix</option>
+            <option value="Haryanvi Dj">Haryanvi Dj</option>
+            <option value="Punjabi Remix">Punjabi Remix</option>
+            <option value="DJ Competition Trance">DJ Competition Trance</option>
+            <option value="HD Videos">HD Video Songs</option>
+            <option value="Audio Remixes">Audio Remixes</option>
+          </optgroup>
+          <optgroup label="Bhajans & Devotional">
+            <option value="Bholenath & Shiv Shankar">भोलेनाथ / शंकर भगवान</option>
+            <option value="Jai Shri Ram & Hanuman">जय श्री राम / हनुमान</option>
+            <option value="Khatu Shyam Ji">श्याम बाबा / खाटू श्याम जी</option>
+            <option value="Navratri & Mata Songs">नवरात्रि स्पेशल सॉन्ग्स</option>
+            <option value="Lord Ganesha Songs">गणेश भगवान सॉन्ग्स</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>📐 Video Size / Format</label>
+        <select id="songRatio">
+          <option value="YouTube Size (16:9)">YouTube Size (16:9)</option>
+          <option value="Instagram Size (9:16)">Instagram Size (9:16)</option>
+          <option value="Square Size (1:1)">Square Size (1:1)</option>
+          <option value="Standard MP3 / Audio">Standard MP3 / Audio</option>
+        </select>
+      </div>
+      
+      <button class="btn btn-upload" id="startUploadBtn" style="width:100%; padding:12px; font-size:1rem;" onclick="uploadTrack()">🚀 Start Upload</button>
+      
+      <div class="progress-container" id="uploadProgressContainer">
+        <div class="progress-bar" id="uploadProgressBar"></div>
+        <div class="progress-text" id="uploadProgressText">0%</div>
+      </div>
+      
+      <button class="btn-next" id="uploadNextBtn" onclick="finishUpload()">✅ Upload Done! Click Next 👉</button>
+      <button class="bottom-close-btn" id="uploadCancelBtn" onclick="closeModals()">✖ Close Panel</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL (With Top ✖ and Bottom ✖ Close) -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🎨 Studio & Theme Settings</h2>
+        <button class="top-close-cross" onclick="closeModals()" title="Close">✖</button>
+      </div>
+      
+      <div class="form-group" style="border: 1px solid var(--primary-color);">
+        <label>🖼️ Upload Logo (प्रोफाइल लोगो बदलें)</label>
+        <input type="file" id="newLogoFile" accept="image/*">
+        <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newLogoFile', 'logo')">Upload Logo ⬆️</button>
+      </div>
+
+      <div class="form-group" style="border: 1px solid var(--primary-color);">
+        <label>🎞️ Upload Banner (बड़ा बैनर बदलें)</label>
+        <input type="file" id="newBannerFile" accept="image/*">
+        <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newBannerFile', 'banner')">Upload Banner ⬆️</button>
+      </div>
+
+      <div class="form-group">
+        <label>✨ Upload Background FX (GIF / MP4)</label>
+        <input type="file" id="newFxFile" accept="image/*,video/mp4">
+        <button class="btn" style="width:100%; margin-top:6px; background:#2196f3;" onclick="uploadSettingFile('newFxFile', 'bgFx')">Upload FX ⬆️</button>
+      </div>
+
+      <div class="progress-container" id="settingProgressContainer">
+        <div class="progress-bar" id="settingProgressBar"></div>
+        <div class="progress-text" id="settingProgressText">0%</div>
+      </div>
+      <button class="btn-next" id="settingNextBtn" onclick="finishSetting()">✅ Media Saved! Click Next 👉</button>
+
+      <div class="form-group" style="margin-top:12px;">
+        <label>📞 Contact Mobile / WhatsApp Number</label>
+        <input type="text" id="contactNumberInput" placeholder="919876543210">
+        
+        <label style="margin-top:8px;">📢 Side Promo Message</label>
+        <input type="text" id="promoTextInput" placeholder="अपने नाम का DJ रीमिक्स सॉन्ग, वेबसाइट या ऐप बनवाने के लिए संपर्क करें!">
+
+        <label style="margin-top:8px;">📝 Running Text (नीचे चलने वाली पट्टी)</label>
+        <input type="text" id="marqueeTextInput" placeholder="WELCOME TO DJ MR JHANSI OFFICIAL STUDIO...">
+
+        <label style="margin-top:8px;">🎨 Theme Color</label>
+        <input type="color" id="themeColor" value="#ff2a5f" style="width:100%; height:38px; cursor:pointer;">
+
+        <label style="margin-top:8px;">🔑 Change Admin PIN (नया पासवर्ड)</label>
+        <input type="text" id="newAdminPinInput" placeholder="Enter new 4-digit PIN">
+
+        <button class="btn" style="width:100%; margin-top:10px; background:#e91e63; padding:10px;" onclick="saveAllTextSettings()">💾 Save All Settings</button>
+      </div>
+      
+      <button class="bottom-close-btn" onclick="closeModals()">✖ Close Settings</button>
+    </div>
+  </div>
+
+  <!-- Embedded Dark SVG Default Graphics (Guarantees ZERO White Box Ever) -->
+  <script>
+    const DEFAULT_DARK_LOGO = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+        <defs>
+          <radialGradient id="g" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff2a5f"/>
+            <stop offset="60%" stop-color="#4a001f"/>
+            <stop offset="100%" stop-color="#09090d"/>
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="url(#g)" stroke="#ff2a5f" stroke-width="4"/>
+        <text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Impact, Arial, sans-serif" font-size="26" letter-spacing="1">DJ MR</text>
+        <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#ffcc00" font-family="Arial, sans-serif" font-weight="bold" font-size="16">JHANSI</text>
+      </svg>
+    `);
+
+    const DEFAULT_DARK_BANNER = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+        <defs>
+          <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#08080c"/>
+            <stop offset="35%" stop-color="#2a0818"/>
+            <stop offset="50%" stop-color="#590d22"/>
+            <stop offset="65%" stop-color="#2a0818"/>
+            <stop offset="100%" stop-color="#08080c"/>
+          </linearGradient>
+          <linearGradient id="Laser1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff9900" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ff0055" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="Laser2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#ff0055" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="300" fill="url(#bg)"/>
+        <polygon points="0,0 450,300 300,300 0,60" fill="url(#Laser1)"/>
+        <polygon points="1200,0 750,300 900,300 1200,60" fill="url(#Laser2)"/>
+        <polygon points="200,0 600,300 520,300 120,0" fill="url(#Laser1)"/>
+        <polygon points="1000,0 600,300 680,300 1080,0" fill="url(#Laser2)"/>
+        <circle cx="600" cy="150" r="130" fill="#000000" fill-opacity="0.65" stroke="#ff2a5f" stroke-width="3"/>
+        <text x="600" y="140" dominant-baseline="middle" text-anchor="middle" fill="#ff2a5f" font-family="Impact, Arial Black, sans-serif" font-size="78" font-style="italic" stroke="#ffffff" stroke-width="2">DJ MR</text>
+        <text x="600" y="210" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Impact, Arial Black, sans-serif" font-size="48" letter-spacing="6">JHANSI</text>
+        <text x="600" y="265" dominant-baseline="middle" text-anchor="middle" fill="#ffcc00" font-family="Arial, sans-serif" font-weight="bold" font-size="18" letter-spacing="4">OFFICIAL REMIX STUDIO</text>
+      </svg>
+    `);
+
+    const DEFAULT_INITIAL_SONG = {
+      id: "default_shyam_mix",
+      title: "DJ Mr Jhansi Official Video Mix",
+      category: "Khatu Shyam Ji",
+      ratio: "YouTube Size (16:9)",
+      youtube: "https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM",
+      url: "https://youtu.be/Ms_tO-1gqRA?si=dpKLfvA4P4TJEvVKM",
+      date: "15/10/2026",
+      timestamp: 1700000000000
+    };
+
+    // Helper: Reject any white placeholder image URL
+    function isValidMediaUrl(url) {
+      if (!url || typeof url !== 'string') return false;
+      const lower = url.toLowerCase();
+      if (lower.includes('via.placeholder.com') || lower.includes('1200x250') || lower.includes('placeholder')) {
+        return false;
+      }
+      return lower.startsWith('http') || lower.startsWith('data:image');
+    }
+
+    // Set immediate dark defaults
+    document.getElementById('siteLogo').src = DEFAULT_DARK_LOGO;
+    document.getElementById('siteBanner').src = DEFAULT_DARK_BANNER;
+  </script>
+
+  <script>
+    const CLOUD_NAME = "sygcuspm";
+    const UPLOAD_PRESET = "dj_mr_jhansi";
+    
+    window.allSongs = [DEFAULT_INITIAL_SONG];
+    window.currentCategory = 'All';
+    window.adminPinCode = localStorage.getItem('dj_admin_pin') || '7860';
+    window.isAdminLoggedIn = localStorage.getItem('dj_admin_logged_in') === 'true';
+
+    function updateAdminUI() {
+      if (window.isAdminLoggedIn) {
+        document.getElementById('loginBtn').style.display = 'none';
+        document.getElementById('uploadBtn').style.display = 'inline-flex';
+        document.getElementById('settingsBtn').style.display = 'inline-flex';
+        document.getElementById('logoutBtn').style.display = 'inline-flex';
+      } else {
+        document.getElementById('loginBtn').style.display = 'inline-flex';
+        document.getElementById('uploadBtn').style.display = 'none';
+        document.getElementById('settingsBtn').style.display = 'none';
+        document.getElementById('logoutBtn').style.display = 'none';
+      }
+      renderSongs();
+    }
+
+    function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+    function openUpload() { document.getElementById('uploadModal').style.display = 'flex'; resetUploadUI(); }
+    function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; resetSettingsUI(); }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+    function checkPin() {
+      const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+      const pin = document.getElementById('adminPin').value.trim();
+
+      if (email === 'ritujhansi01@gmail.com' && (pin === window.adminPinCode || pin === '7860')) {
+        window.isAdminLoggedIn = true;
+        localStorage.setItem('dj_admin_logged_in', 'true');
+        updateAdminUI();
+        closeModals();
+      } else {
+        alert("गलत Gmail ID या PIN! (Default Gmail: ritujhansi01@gmail.com | PIN: 7860)");
+      }
+    }
+
+    function logoutAdmin() {
+      window.isAdminLoggedIn = false;
+      localStorage.removeItem('dj_admin_logged_in');
+      updateAdminUI();
+    }
+
+    function resetAdminPinPrompt() {
+      const email = prompt("अपना Admin Gmail ID दर्ज करें (ritujhansi01@gmail.com):");
+      if (email && email.trim().toLowerCase() === 'ritujhansi01@gmail.com') {
+        const newPin = prompt("अपना नया 4-अंकों का PIN डालें:", "7860");
+        if (newPin && newPin.trim().length >= 4) {
+          window.adminPinCode = newPin.trim();
+          localStorage.setItem('dj_admin_pin', window.adminPinCode);
+          if (window.saveCloudSettings) {
+            window.saveCloudSettings({ adminPin: window.adminPinCode });
+          }
+          alert("✅ आपका नया PIN (" + window.adminPinCode + ") सेव हो गया है!");
+        }
+      } else if (email !== null) {
+        alert("❌ Gmail ID मैच नहीं हुई!");
+      }
+    }
+
+    function toggleUploadMode() {
+      const mode = document.getElementById('uploadType').value;
+      document.getElementById('youtubeGroup').style.display = (mode === 'youtube') ? 'block' : 'none';
+      document.getElementById('fileGroup').style.display = (mode === 'file') ? 'block' : 'none';
+      document.getElementById('externalGroup').style.display = (mode === 'external') ? 'block' : 'none';
+    }
+
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    async function autoDetectYouTube() {
+      const ytUrl = document.getElementById('youtubeLink').value.trim();
+      const titleInput = document.getElementById('songTitle');
+      const ratioSelect = document.getElementById('songRatio');
+
+      if (ytUrl.includes("youtube.com") || ytUrl.includes("youtu.be")) {
+        ratioSelect.value = "YouTube Size (16:9)";
+        if (!titleInput.value) {
+          titleInput.value = "DJ Mr Jhansi Official Video Mix";
+        }
+        try {
+          const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(ytUrl)}`);
+          const data = await res.json();
+          if (data && data.title) {
+            titleInput.value = data.title;
+          }
+        } catch (e) {}
+      }
+    }
+
+    function autoFillFileName() {
+      const file = document.getElementById('songFile').files[0];
+      const titleInput = document.getElementById('songTitle');
+      if (file && !titleInput.value) {
+        titleInput.value = file.name.replace(/\.[^/.]+$/, "");
+      }
+    }
+
+    function applyBackground(url) {
+      if (!isValidMediaUrl(url)) return;
+      const bgVideo = document.getElementById('bgVideo');
+      const bgImage = document.getElementById('bgImage');
+      
+      if (url.endsWith('.mp4') || url.includes('/video/upload/')) {
+        bgImage.style.display = 'none';
+        bgVideo.style.display = 'block';
+        bgVideo.src = url;
+      } else {
+        bgVideo.style.display = 'none';
+        bgVideo.src = "";
+        bgImage.style.display = 'block';
+        bgImage.style.backgroundImage = `url('${url}')`;
+      }
+    }
+
+    function resetUploadUI() {
+      document.getElementById('uploadType').value = 'youtube';
+      toggleUploadMode();
+      document.getElementById('songFile').value = '';
+      document.getElementById('songTitle').value = '';
+      document.getElementById('youtubeLink').value = '';
+      document.getElementById('externalLink').value = '';
+      document.getElementById('startUploadBtn').style.display = 'block';
+      document.getElementById('uploadProgressContainer').style.display = 'none';
+      document.getElementById('uploadNextBtn').style.display = 'none';
+      document.getElementById('uploadProgressBar').style.width = '0%';
+    }
+
+    function resetSettingsUI() {
+      document.getElementById('settingProgressContainer').style.display = 'none';
+      document.getElementById('settingNextBtn').style.display = 'none';
+      document.getElementById('settingProgressBar').style.width = '0%';
+    }
+
+    function applySettingsToDOM(cfg) {
+      if (!cfg) return;
+      if (isValidMediaUrl(cfg.logo)) {
+        document.getElementById('siteLogo').src = cfg.logo;
+        localStorage.setItem('dj_saved_logo', cfg.logo);
+      }
+      if (isValidMediaUrl(cfg.banner)) {
+        document.getElementById('siteBanner').src = cfg.banner;
+        localStorage.setItem('dj_saved_banner', cfg.banner);
+      }
+      if (isValidMediaUrl(cfg.bgFx)) {
+        applyBackground(cfg.bgFx);
+        localStorage.setItem('dj_saved_bg', cfg.bgFx);
+      }
+      if (cfg.color) {
+        document.documentElement.style.setProperty('--primary-color', cfg.color);
+        document.getElementById('themeColor').value = cfg.color;
+      }
+      if (cfg.marquee) {
+        document.getElementById('siteMarquee').innerText = cfg.marquee;
+        document.getElementById('marqueeTextInput').value = cfg.marquee;
+      }
+      if (cfg.contactNumber) {
+        const cleanNum = cfg.contactNumber.replace(/[^0-9]/g, '');
+        document.getElementById('callContactBtn').href = `tel:+${cleanNum}`;
+        document.getElementById('waContactBtn').href = `https://wa.me/${cleanNum}`;
+        document.getElementById('contactNumberInput').value = cleanNum;
+      }
+      if (cfg.promoText) {
+        document.getElementById('promoSubtext').innerText = cfg.promoText;
+        document.getElementById('promoTextInput').value = cfg.promoText;
+      }
+      if (cfg.adminPin) {
+        window.adminPinCode = cfg.adminPin;
+        localStorage.setItem('dj_admin_pin', cfg.adminPin);
+      }
+    }
+
+    // Load cached valid media immediately so refresh never flickers
+    (function loadCachedSettings() {
+      const cLogo = localStorage.getItem('dj_saved_logo');
+      const cBanner = localStorage.getItem('dj_saved_banner');
+      const cBg = localStorage.getItem('dj_saved_bg');
+      if (isValidMediaUrl(cLogo)) document.getElementById('siteLogo').src = cLogo;
+      if (isValidMediaUrl(cBanner)) document.getElementById('siteBanner').src = cBanner;
+      if (isValidMediaUrl(cBg)) applyBackground(cBg);
+    })();
+
+    async function saveAllTextSettings() {
+      const color = document.getElementById('themeColor').value;
+      const marqueeText = document.getElementById('marqueeTextInput').value.trim();
+      const contactNum = document.getElementById('contactNumberInput').value.trim();
+      const promoText = document.getElementById('promoTextInput').value.trim();
+      const newPin = document.getElementById('newAdminPinInput').value.trim();
+
+      let updateData = { color: color };
+      if (marqueeText) updateData.marquee = marqueeText;
+      if (contactNum) updateData.contactNumber = contactNum;
+      if (promoText) updateData.promoText = promoText;
+      if (newPin && newPin.length >= 4) updateData.adminPin = newPin;
+
+      applySettingsToDOM(updateData);
+
+      if (window.saveCloudSettings) {
+        await window.saveCloudSettings(updateData);
+      }
+      alert("✅ सारी सेटिंग्स क्लाउड डेटाबेस में सेव हो गईं!");
+    }
+
+    async function uploadTrack() {
+      const mode = document.getElementById('uploadType').value;
+      const title = document.getElementById('songTitle').value.trim() || "DJ Mr Jhansi Official Mix";
+      const category = document.getElementById('songCategory').value;
+      const ratio = document.getElementById('songRatio').value;
+      const ytLink = document.getElementById('youtubeLink').value.trim();
+      const extLink = document.getElementById('externalLink').value.trim();
+      const file = document.getElementById('songFile').files[0];
+
+      if (mode === 'youtube' && !ytLink) return alert("कृपया YouTube लिंक पेस्ट करें!");
+      if (mode === 'file' && !file) return alert("कृपया अपलोड करने के लिए MP3 या Video फाइल चुनें!");
+      if (mode === 'external' && !extLink) return alert("कृपया डायरेक्ट लिंक डालें!");
+
+      document.getElementById('startUploadBtn').style.display = 'none';
+      document.getElementById('uploadProgressContainer').style.display = 'block';
+
+      const finishAndSaveTrack = async (mediaUrl) => {
+        const newSongObj = {
+          title: title,
+          category: category,
+          ratio: ratio,
+          youtube: (mode === 'youtube' ? ytLink : ''),
+          url: mediaUrl,
+          date: new Date().toLocaleDateString('en-GB'),
+          timestamp: Date.now()
+        };
+
+        if (window.addCloudSong) {
+          await window.addCloudSong(newSongObj);
+        } else {
+          window.allSongs.unshift(newSongObj);
+          renderSongs();
+        }
+
+        document.getElementById('uploadProgressBar').style.width = '100%';
+        document.getElementById('uploadProgressText').innerText = "100% - पब्लिक डेटाबेस में सेव हो गया!";
+        document.getElementById('uploadNextBtn').style.display = 'block';
+      };
+
+      if (mode === 'file') {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", UPLOAD_PRESET);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            document.getElementById('uploadProgressBar').style.width = percent + '%';
+            document.getElementById('uploadProgressText').innerText = percent + '% Uploading File...';
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            const response = JSON.parse(xhr.responseText);
+            finishAndSaveTrack(response.secure_url);
+          } else {
+            alert("फाइल अपलोड में दिक्कत आई। कृपया दोबारा कोशिश करें या YouTube/Direct लिंक का उपयोग करें।");
+            resetUploadUI();
+          }
+        };
+
+        xhr.onerror = () => {
+          alert("इंटरनेट कनेक्शन एरर! फाइल अपलोड नहीं हो पाई।");
+          resetUploadUI();
+        };
+
+        xhr.send(formData);
+      } else if (mode === 'external') {
+        await finishAndSaveTrack(extLink);
+      } else {
+        await finishAndSaveTrack(ytLink);
+      }
+    }
+
+    function finishUpload() { closeModals(); resetUploadUI(); }
+
+    function uploadSettingFile(inputId, settingKey) {
+      const file = document.getElementById(inputId).files[0];
+      if (!file) return alert("कृपया पहले फोटो या फाइल चुनें!");
+
+      document.getElementById('settingProgressContainer').style.display = 'block';
+      document.getElementById('settingNextBtn').style.display = 'none';
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", UPLOAD_PRESET);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
+
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const percent = Math.round((e.loaded / e.total) * 100);
+          document.getElementById('settingProgressBar').style.width = percent + '%';
+          document.getElementById('settingProgressText').innerText = percent + '% Uploading...';
+        }
+      };
+
+      xhr.onload = async () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const response = JSON.parse(xhr.responseText);
+          const fileUrl = response.secure_url;
+          
+          let updateData = {};
+          updateData[settingKey] = fileUrl;
+
+          applySettingsToDOM(updateData);
+          if (window.saveCloudSettings) {
+            await window.saveCloudSettings(updateData);
+          }
+
+          document.getElementById('settingProgressText').innerText = "100% - हमेशा के लिए सेव हो गया!";
+          document.getElementById('settingNextBtn').style.display = 'block';
+        } else {
+          // Fallback: Convert small image to base64 if Cloudinary preset blocks it
+          if (file.type.startsWith('image/') && file.size < 700000) {
+            const reader = new FileReader();
+            reader.onload = async function(ev) {
+              const base64Url = ev.target.result;
+              let updateData = {};
+              updateData[settingKey] = base64Url;
+              applySettingsToDOM(updateData);
+              if (window.saveCloudSettings) {
+                await window.saveCloudSettings(updateData);
+              }
+              document.getElementById('settingProgressBar').style.width = '100%';
+              document.getElementById('settingProgressText').innerText = "100% - सीधे डेटाबेस में सेव हो गया!";
+              document.getElementById('settingNextBtn').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          } else {
+            alert("अपलोड फेल हो गया। कृपया छोटी साइज की इमेज चुनें।");
+            resetSettingsUI();
+          }
+        }
+      };
+
+      xhr.send(formData);
+    }
+
+    function finishSetting() { closeModals(); resetSettingsUI(); }
+
+    window.filterCategory = function(cat, el) {
+      window.currentCategory = cat;
+      if (el) {
+        document.querySelectorAll('.playlist-menu li').forEach(li => li.classList.remove('active'));
+        el.classList.add('active');
+      }
+      renderSongs();
+    };
+
+    window.renderSongs = function() {
+      const container = document.getElementById('songsContainer');
+      container.innerHTML = '';
+      
+      let list = (window.allSongs && window.allSongs.length > 0) ? [...window.allSongs] : [DEFAULT_INITIAL_SONG];
+      list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+      if (window.currentCategory && window.currentCategory !== 'All') {
+        list = list.filter(s => s.category === window.currentCategory);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color:#aaa;">इस प्लेलिस्ट में अभी कोई गाना नहीं है। (+ Upload Song से गाना जोड़ें)</p>';
+        return;
+      }
+
+      list.forEach(song => {
+        const targetUrl = (song.url && song.url.startsWith('http')) ? song.url : (song.youtube || '#');
+        const ytId = extractYouTubeId(song.youtube || targetUrl);
+        const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : DEFAULT_DARK_BANNER;
+
+        let mediaEmbed = '';
+        if (!ytId && targetUrl.match(/\.(mp3|wav|ogg|m4a)(\?|$)/i)) {
+          mediaEmbed = `<div class="media-player-box"><audio controls src="${targetUrl}"></audio></div>`;
+        } else if (!ytId && targetUrl.match(/\.(mp4|webm|mov)(\?|$)/i)) {
+          mediaEmbed = `<div class="media-player-box"><video controls src="${targetUrl}"></video></div>`;
+        }
+
+        const ytButton = (song.youtube || ytId) ? `<a href="${song.youtube || targetUrl}" target="_blank" class="youtube-btn">▶ YouTube</a>` : '';
+        const shareText = encodeURIComponent(`🔥 Listen & Download: ${song.title} (${song.category}) from DJ Mr Jhansi Official Studio! ${targetUrl}`);
+        const whatsappShare = `https://api.whatsapp.com/send?text=${shareText}`;
+        const deleteButton = (window.isAdminLoggedIn && song.id && song.id !== 'default_shyam_mix')
+          ? `<button class="delete-btn" onclick="deleteSongTrack('${song.id}')">🗑 Delete</button>`
+          : '';
+
+        container.innerHTML += `
+          <div class="song-card">
+            <div class="thumb-wrapper" onclick="window.open('${targetUrl}', '_blank')">
+              <img src="${thumbUrl}" alt="${song.title}" onerror="this.src=DEFAULT_DARK_BANNER">
+              <span class="dj-badge">DJ MR JHANSI</span>
+              <div class="play-overlay-icon"></div>
+            </div>
+            <div class="song-body">
+              <h3>${song.title}</h3>
+              <p class="song-meta">📁 ${song.category} | 📐 ${song.ratio || 'YouTube Size (16:9)'} | 📅 ${song.date || ''}</p>
+              <a href="${targetUrl}" target="_blank" class="song-link-text">${targetUrl}</a>
+              ${mediaEmbed}
+              <div class="action-buttons">
+                ${ytButton}
+                <a href="${targetUrl}" target="_blank" class="download-btn">⬇ Download / Play</a>
+                <a href="${whatsappShare}" target="_blank" class="share-btn">🔗 Share</a>
+                ${deleteButton}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    };
+
+    // Initial render
+    updateAdminUI();
+  </script>
+
+  <!-- Cloud Firestore Direct Sync (Matches the Firestore Database & Rules You Enabled) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { 
+      getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDripMMFxcqxeG3j5gF9QL1adbO8_5oicw",
+      authDomain: "dj-mr-jhansi.firebaseapp.com",
+      projectId: "dj-mr-jhansi",
+      storageBucket: "dj-mr-jhansi.firebasestorage.app",
+      messagingSenderId: "455631977039",
+      appId: "1:455631977039:web:ff10f18fc1bf91e2af083a",
+      measurementId: "G-T121400XKZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const settingsDocRef = doc(db, "studio_config", "main_settings");
+    const songsColRef = collection(db, "songs");
+
+    window.saveCloudSettings = async function(newSettings) {
+      try {
+        await setDoc(settingsDocRef, newSettings, { merge: true });
+      } catch (err) {
+        console.error("Settings sync error:", err);
+      }
+    };
+
+    window.addCloudSong = async function(songData) {
+      try {
+        await addDoc(songsColRef, songData);
+      } catch (err) {
+        console.error("Song upload sync error:", err);
+      }
+    };
+
+    window.deleteSongTrack = async function(docId) {
+      if (!confirm("क्या आप वाकई इस गाने को हमेशा के लिए हटाना चाहते हैं?")) return;
+      try {
+        await deleteDoc(doc(db, "songs", docId));
+      } catch (err) {
+        console.error("Delete error:", err);
+      }
+    };
+
+    // Real-time listener for Logo, Banner, Background FX, Contact & Theme
+    onSnapshot(settingsDocRef, (docSnap) => {
+      if (docSnap.exists()) {
+        applySettingsToDOM(docSnap.data());
+      }
+    });
+
+    // Real-time listener for Songs across all phones
+    onSnapshot(songsColRef, (querySnapshot) => {
+      const cloudSongs = [];
+      querySnapshot.forEach((docItem) => {
+        cloudSongs.push({ id: docItem.id, ...docItem.data() });
+      });
+
+      if (cloudSongs.length === 0) {
+        // Seed default Khatu Shyam Ji track automatically if database is empty
+        addDoc(songsColRef, {
+          title: DEFAULT_INITIAL_SONG.title,
+          category: DEFAULT_INITIAL_SONG.category,
+          ratio: DEFAULT_INITIAL_SONG.ratio,
+          youtube: DEFAULT_INITIAL_SONG.youtube,
+          url: DEFAULT_INITIAL_SONG.url,
+          date: DEFAULT_INITIAL_SONG.date,
+          timestamp: DEFAULT_INITIAL_SONG.timestamp
+        }).catch(() => {});
+        window.allSongs = [DEFAULT_INITIAL_SONG];
+      } else {
+        window.allSongs = cloudSongs;
+      }
+      window.renderSongs();
+    });
+  </script>
+
 </body>
 </html>
